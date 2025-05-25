@@ -1,6 +1,6 @@
 [
   {
-    "book": "genesis",
+    "book": "Genesis",
     "aliases": [
       "gen"
     ],
@@ -58,7 +58,7 @@
     ]
   },
   {
-    "book": "exodus",
+    "book": "Exodus",
     "aliases": [
       "exod"
     ],
@@ -106,7 +106,7 @@
     ]
   },
   {
-    "book": "leviticus",
+    "book": "Leviticus",
     "aliases": [
       "lev"
     ],
@@ -141,7 +141,7 @@
     ]
   },
   {
-    "book": "numbers",
+    "book": "Numbers",
     "aliases": [
       "num"
     ],
@@ -185,7 +185,7 @@
     ]
   },
   {
-    "book": "deuteronomy",
+    "book": "Deuteronomy",
     "aliases": [
       "deut"
     ],
@@ -227,7 +227,7 @@
     ]
   },
   {
-    "book": "joshua",
+    "book": "Joshua",
     "aliases": [
       "josh"
     ],
@@ -259,7 +259,7 @@
     ]
   },
   {
-    "book": "judges",
+    "book": "Judges",
     "aliases": [
       "judg"
     ],
@@ -288,7 +288,7 @@
     ]
   },
   {
-    "book": "ruth",
+    "book": "Ruth",
     "aliases": [
       "ruth"
     ],
@@ -300,7 +300,7 @@
     ]
   },
   {
-    "book": "1 samuel",
+    "book": "1 Samuel",
     "aliases": [
       "1sam"
     ],
@@ -339,7 +339,7 @@
     ]
   },
   {
-    "book": "2 samuel",
+    "book": "2 Samuel",
     "aliases": [
       "2sam"
     ],
@@ -371,7 +371,7 @@
     ]
   },
   {
-    "book": "1 kings",
+    "book": "1 Kings",
     "aliases": [
       "1kgs"
     ],
@@ -401,7 +401,7 @@
     ]
   },
   {
-    "book": "2 kings",
+    "book": "2 Kings",
     "aliases": [
       "2kgs"
     ],
@@ -434,7 +434,7 @@
     ]
   },
   {
-    "book": "1 chronicles",
+    "book": "1 Chronicles",
     "aliases": [
       "1chr"
     ],
@@ -471,7 +471,7 @@
     ]
   },
   {
-    "book": "2 chronicles",
+    "book": "2 Chronicles",
     "aliases": [
       "2chr"
     ],
@@ -515,7 +515,7 @@
     ]
   },
   {
-    "book": "ezra",
+    "book": "Ezra",
     "aliases": [
       "ezra"
     ],
@@ -533,7 +533,7 @@
     ]
   },
   {
-    "book": "nehemiah",
+    "book": "Nehemiah",
     "aliases": [
       "neh"
     ],
@@ -554,7 +554,7 @@
     ]
   },
   {
-    "book": "esther",
+    "book": "Esther",
     "aliases": [
       "esth"
     ],
@@ -572,7 +572,7 @@
     ]
   },
   {
-    "book": "job",
+    "book": "Job",
     "aliases": [
       "job"
     ],
@@ -622,7 +622,7 @@
     ]
   },
   {
-    "book": "psalm",
+    "book": "Psalm",
     "aliases": [
       "ps"
     ],
@@ -780,7 +780,7 @@
     ]
   },
   {
-    "book": "proverbs",
+    "book": "Proverbs",
     "aliases": [
       "prov"
     ],
@@ -819,7 +819,7 @@
     ]
   },
   {
-    "book": "ecclesiastes",
+    "book": "Ecclesiastes",
     "aliases": [
       "eccl"
     ],
@@ -839,7 +839,7 @@
     ]
   },
   {
-    "book": "song of solomon",
+    "book": "Song of solomon",
     "aliases": [
       "song"
     ],
@@ -855,7 +855,7 @@
     ]
   },
   {
-    "book": "isaiah",
+    "book": "Isaiah",
     "aliases": [
       "isa"
     ],
@@ -929,7 +929,7 @@
     ]
   },
   {
-    "book": "jeremiah",
+    "book": "Jeremiah",
     "aliases": [
       "jer"
     ],
@@ -989,7 +989,7 @@
     ]
   },
   {
-    "book": "lamentations",
+    "book": "Lamentations",
     "aliases": [
       "lam"
     ],
@@ -1002,7 +1002,7 @@
     ]
   },
   {
-    "book": "ezekiel",
+    "book": "Ezekiel",
     "aliases": [
       "ezek"
     ],
@@ -1058,7 +1058,7 @@
     ]
   },
   {
-    "book": "daniel",
+    "book": "Daniel",
     "aliases": [
       "dan"
     ],
@@ -1078,7 +1078,7 @@
     ]
   },
   {
-    "book": "hosea",
+    "book": "Hosea",
     "aliases": [
       "hos"
     ],
@@ -1100,7 +1100,7 @@
     ]
   },
   {
-    "book": "joel",
+    "book": "Joel",
     "aliases": [
       "joel"
     ],
@@ -1111,7 +1111,7 @@
     ]
   },
   {
-    "book": "amos",
+    "book": "Amos",
     "aliases": [
       "amos"
     ],
@@ -1128,7 +1128,7 @@
     ]
   },
   {
-    "book": "obadiah",
+    "book": "Obadiah",
     "aliases": [
       "obad"
     ],
@@ -1137,7 +1137,7 @@
     ]
   },
   {
-    "book": "jonah",
+    "book": "Jonah",
     "aliases": [
       "jonah"
     ],
@@ -1149,7 +1149,7 @@
     ]
   },
   {
-    "book": "micah",
+    "book": "Micah",
     "aliases": [
       "mic"
     ],
@@ -1164,7 +1164,7 @@
     ]
   },
   {
-    "book": "nahum",
+    "book": "Nahum",
     "aliases": [
       "nah"
     ],
@@ -1175,7 +1175,7 @@
     ]
   },
   {
-    "book": "habakkuk",
+    "book": "Habakkuk",
     "aliases": [
       "hab"
     ],
@@ -1186,7 +1186,7 @@
     ]
   },
   {
-    "book": "zephaniah",
+    "book": "Zephaniah",
     "aliases": [
       "zeph"
     ],
@@ -1197,7 +1197,7 @@
     ]
   },
   {
-    "book": "haggai",
+    "book": "Haggai",
     "aliases": [
       "hag"
     ],
@@ -1207,7 +1207,7 @@
     ]
   },
   {
-    "book": "zechariah",
+    "book": "Zechariah",
     "aliases": [
       "zech"
     ],
@@ -1229,7 +1229,7 @@
     ]
   },
   {
-    "book": "malachi",
+    "book": "Malachi",
     "aliases": [
       "mal"
     ],
@@ -1241,7 +1241,7 @@
     ]
   },
   {
-    "book": "matthew",
+    "book": "Matthew",
     "aliases": [
       "matt"
     ],
@@ -1277,9 +1277,8 @@
     ]
   },
   {
-    "book": "mark",
+    "book": "Mark",
     "aliases": [
-      "mark"
     ],
     "chapters": [
       45,
@@ -1301,9 +1300,8 @@
     ]
   },
   {
-    "book": "luke",
+    "book": "Luke",
     "aliases": [
-      "luke"
     ],
     "chapters": [
       80,
@@ -1333,9 +1331,8 @@
     ]
   },
   {
-    "book": "john",
+    "book": "John",
     "aliases": [
-      "john"
     ],
     "chapters": [
       51,
@@ -1362,9 +1359,8 @@
     ]
   },
   {
-    "book": "acts",
+    "book": "Acts",
     "aliases": [
-      "acts"
     ],
     "chapters": [
       26,
@@ -1398,7 +1394,7 @@
     ]
   },
   {
-    "book": "romans",
+    "book": "Romans",
     "aliases": [
       "rom"
     ],
@@ -1422,7 +1418,7 @@
     ]
   },
   {
-    "book": "1 corinthians",
+    "book": "1 Corinthians",
     "aliases": [
       "1cor"
     ],
@@ -1446,7 +1442,7 @@
     ]
   },
   {
-    "book": "2 corinthians",
+    "book": "2 Corinthians",
     "aliases": [
       "2cor"
     ],
@@ -1467,7 +1463,7 @@
     ]
   },
   {
-    "book": "galatians",
+    "book": "Galatians",
     "aliases": [
       "gal"
     ],
@@ -1481,7 +1477,7 @@
     ]
   },
   {
-    "book": "ephesians",
+    "book": "Ephesians",
     "aliases": [
       "eph"
     ],
@@ -1495,7 +1491,7 @@
     ]
   },
   {
-    "book": "philippians",
+    "book": "Philippians",
     "aliases": [
       "phil"
     ],
@@ -1507,7 +1503,7 @@
     ]
   },
   {
-    "book": "colossians",
+    "book": "Colossians",
     "aliases": [
       "col"
     ],
@@ -1519,7 +1515,7 @@
     ]
   },
   {
-    "book": "1 thessalonians",
+    "book": "1 Thessalonians",
     "aliases": [
       "1thess"
     ],
@@ -1532,7 +1528,7 @@
     ]
   },
   {
-    "book": "2 thessalonians",
+    "book": "2 Thessalonians",
     "aliases": [
       "2thess"
     ],
@@ -1543,7 +1539,7 @@
     ]
   },
   {
-    "book": "1 timothy",
+    "book": "1 Timothy",
     "aliases": [
       "1tim"
     ],
@@ -1557,7 +1553,7 @@
     ]
   },
   {
-    "book": "2 timothy",
+    "book": "2 Timothy",
     "aliases": [
       "2tim"
     ],
@@ -1569,7 +1565,7 @@
     ]
   },
   {
-    "book": "titus",
+    "book": "Titus",
     "aliases": [
       "titus"
     ],
@@ -1580,7 +1576,7 @@
     ]
   },
   {
-    "book": "philemon",
+    "book": "Philemon",
     "aliases": [
       "phlm"
     ],
@@ -1589,7 +1585,7 @@
     ]
   },
   {
-    "book": "hebrews",
+    "book": "Hebrews",
     "aliases": [
       "heb"
     ],
@@ -1610,7 +1606,7 @@
     ]
   },
   {
-    "book": "james",
+    "book": "James",
     "aliases": [
       "jas"
     ],
@@ -1623,7 +1619,7 @@
     ]
   },
   {
-    "book": "1 peter",
+    "book": "1 Peter",
     "aliases": [
       "1pet"
     ],
@@ -1636,7 +1632,7 @@
     ]
   },
   {
-    "book": "2 peter",
+    "book": "2 Peter",
     "aliases": [
       "2pet"
     ],
@@ -1647,9 +1643,8 @@
     ]
   },
   {
-    "book": "1 john",
+    "book": "1 John",
     "aliases": [
-      "1john"
     ],
     "chapters": [
       10,
@@ -1660,34 +1655,32 @@
     ]
   },
   {
-    "book": "2 john",
+    "book": "2 John",
     "aliases": [
-      "2john"
+      
     ],
     "chapters": [
       13
     ]
   },
   {
-    "book": "3 john",
+    "book": "3 John",
     "aliases": [
-      "3john"
     ],
     "chapters": [
       15
     ]
   },
   {
-    "book": "jude",
+    "book": "Jude",
     "aliases": [
-      "jude"
     ],
     "chapters": [
       25
     ]
   },
   {
-    "book": "revelation",
+    "book": "Revelation",
     "aliases": [
       "rev"
     ],

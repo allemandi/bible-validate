@@ -1,19 +1,36 @@
 import bibleCounts from '../data/bibleCounts.json';
-import { normalizeBook } from './normalizer';
+import { normalizeBookName } from './normalizer';
+
+// Build a Map at load time for fast lookup by normalized book name or alias
+const bookCache = new Map();
 
 /**
  * Returns the book object (including aliases and chapters) or null.
  */
 function getBook(book) {
-  const query = normalizeBook(book);
-  return bibleCounts.find(
-    (b) => normalizeBook(b.book) === query || b.aliases.map(normalizeBook).includes(query)
-  ) || null;
+  if (!book) return null;
+
+  const normalized = normalizeBookName(book);
+  if (bookCache.has(normalized)) {
+    return bookCache.get(normalized);
+  }
+
+  const found = bibleCounts.find(b => {
+    const normalizedBook = normalizeBookName(b.book);
+    if (normalizedBook === normalized) return true;
+
+    const normalizedAliases = b.aliases.map(normalizeBookName);
+    return normalizedAliases.includes(normalized);
+  }) || null;
+
+  bookCache.set(normalized, found);
+  return found;
 }
 
 /**
  * Returns the number of chapters in the given book.
  */
+
 function getChapterCount(name) {
   const book = getBook(name);
   return book ? book.chapters.length : null;
@@ -29,8 +46,9 @@ function getVerseCount(name, chapter) {
 }
 
 
+
 export {
-  getBook,
-  getChapterCount,
-  getVerseCount,
+    getBook,
+    getChapterCount,
+    getVerseCount,
 };
