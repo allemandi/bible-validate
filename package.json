@@ -1,6 +1,6 @@
 {
   "name": "@allemandi/bible-validate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilities for Bible passage validation",
   "main": "dist/index.cjs",
   "module": "dist/index.module.js",
@@ -23,7 +23,7 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "lint": "eslint .",
-    "build": "microbundle"
+    "build": "microbundle --name bibleValidate"
   },
   "source": "src/index.js",
   "type": "module",
