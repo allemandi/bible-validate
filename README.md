@@ -37,7 +37,7 @@ yarn test
 `getVerseCount(bookName: string, chapter: number): number | null`
 - Returns the number of verses in the specified chapter of the book, or null if invalid.
 
-`normalizeBook(bookName: string | null): string | null`
+`normalizeBookName(bookName: string | null): string | null`
 - Normalizes a book name string by trimming and converting to lowercase for consistent comparisons.
 
 `isValidBook(bookName: string): boolean`

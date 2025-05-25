@@ -1,13 +1,13 @@
 import bibleCounts from '../data/bibleCounts.json';
-import { normalizeBook } from './normalizer';
+import { normalizeBookName } from './normalizer';
 
 /**
  * Returns the book object (including aliases and chapters) or null.
  */
 function getBook(book) {
-  const query = normalizeBook(book);
+  const query = normalizeBookName(book);
   return bibleCounts.find(
-    (b) => normalizeBook(b.book) === query || b.aliases.map(normalizeBook).includes(query)
+    (b) => normalizeBookName(b.book) === query || b.aliases.map(normalizeBookName).includes(query)
   ) || null;
 }
 

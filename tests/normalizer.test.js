@@ -1,31 +1,31 @@
-import { normalizeBook } from '../src/utils/normalizer';
+import { normalizeBookName } from '../src/utils/normalizer';
 
-describe('normalizeBook()', () => {
+describe('normalizeBookName()', () => {
   it('converts uppercase to lowercase', () => {
-    expect(normalizeBook('GENESIS')).toBe('genesis');
+    expect(normalizeBookName('GENESIS')).toBe('genesis');
   });
 
   it('trims leading and trailing spaces', () => {
-    expect(normalizeBook('  Genesis ')).toBe('genesis');
+    expect(normalizeBookName('  Genesis ')).toBe('genesis');
   });
 
   it('handles mixed case and extra spaces', () => {
-    expect(normalizeBook('  gEnEsIs  ')).toBe('genesis');
+    expect(normalizeBookName('  gEnEsIs  ')).toBe('genesis');
   });
 
   it('returns empty string if input is only spaces', () => {
-    expect(normalizeBook('   ')).toBe('');
+    expect(normalizeBookName('   ')).toBe('');
   });
 
   it('returns null if input is null', () => {
-    expect(normalizeBook(null)).toBeNull();
+    expect(normalizeBookName(null)).toBeNull();
   });
 
   it('returns null if input is undefined', () => {
-    expect(normalizeBook(undefined)).toBeNull();
+    expect(normalizeBookName(undefined)).toBeNull();
   });
 
   it('works with already clean input', () => {
-    expect(normalizeBook('genesis')).toBe('genesis');
+    expect(normalizeBookName('genesis')).toBe('genesis');
   });
 });
