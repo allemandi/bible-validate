@@ -30,31 +30,81 @@ function normalizeBookName(name) {
  * - verse ranges ["chap. 13, v3 to 8", "Chapter 13 Verses 4–7"]
  */
 function parseChapterVerse(str) {
-  if (!str) return null;
+    if (!str) return null;
 
-  const cleaned = str.toLowerCase()
-    .replace(/[–—]/g, '-')
-    .replace(/\bto\b/g, '-')
-    .replace(/[a-z.,]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+    const cleaned = str.toLowerCase()
+        .replace(/[–—]/g, '-')
+        .replace(/\bto\b/g, '-')
+        .replace(/[a-z.,]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
 
-  const tokens = cleaned.split(/[\s\-:]+/).filter(Boolean);
-  const nums = tokens.map(t => parseInt(t, 10)).filter(n => !isNaN(n));
+    const tokens = cleaned.split(/[\s\-:]+/).filter(Boolean);
+    const nums = tokens.map(t => parseInt(t, 10)).filter(n => !isNaN(n));
 
-  if (nums.length === 0) return null;
+    if (nums.length === 0) return null;
 
-  switch (nums.length) {
-    case 1:
-      return { chapter: nums[0], verseStart: null, verseEnd: null };
-    case 2:
-      return { chapter: nums[0], verseStart: nums[1], verseEnd: null };
-    default:
-      return { chapter: nums[0], verseStart: nums[1], verseEnd: nums[2] };
-  }
+    switch (nums.length) {
+        case 1:
+            return { chapter: nums[0], verseStart: null, verseEnd: null };
+        case 2:
+            return { chapter: nums[0], verseStart: nums[1], verseEnd: null };
+        default:
+            return { chapter: nums[0], verseStart: nums[1], verseEnd: nums[2] };
+    }
 }
+/**
+ * Extracts book name and chapter/verse range from a reference string.
+ * - Book part is the first part of the string until a digit or end of string
+ * - Identifies chapter strings like "chapter", "chap.", or digits 
+ */
+function extractBookAndRange(ref) {
+    if (!ref || typeof ref !== 'string') return [null, null];
+
+    const cleaned = ref.trim().replace(/\s+/g, ' ');
+
+    const pattern = /^([\d\w\s.']+?)\s*(?=\b(ch(?:apter)?|chap\.?)\b|\d)/i;
+    const match = cleaned.match(pattern);
+
+    if (match) {
+        const book = match[1].trim();
+        const range = cleaned.slice(match[0].length).trim();
+        return [book, range];
+    }
+    return [cleaned, ''];
+}
+
+function parseBibleReference(ref) {
+    if (!ref || typeof ref !== 'string') return null;
+
+    const cleanedRef = ref.trim().replace(/\s+/g, ' ');
+    const [bookRaw, chapterVerseRaw] = extractBookAndRange(cleanedRef);
+
+    const book = normalizeBookName(bookRaw);
+
+    if (!book) {
+        return {
+            book: null,
+            chapter: null,
+            verseStart: null,
+            verseEnd: null,
+        };
+    }
+
+    const chapVerse = parseChapterVerse(chapterVerseRaw);
+
+    return {
+        book,
+        chapter: chapVerse?.chapter ?? null,
+        verseStart: chapVerse?.verseStart ?? null,
+        verseEnd: chapVerse?.verseEnd ?? null,
+    };
+}
+
 
 export {
     normalizeBookName,
-    parseChapterVerse
+    parseChapterVerse,
+    extractBookAndRange,
+    parseBibleReference,
 };

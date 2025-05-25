@@ -4,9 +4,11 @@
   "description": "Utilities for Bible passage validation",
   "main": "dist/index.cjs",
   "module": "dist/index.module.js",
+  "browser": "dist/index.umd.js",
   "exports": {
     "import": "./dist/index.module.js",
-    "require": "./dist/index.cjs"
+    "require": "./dist/index.cjs",
+    "browser": "./dist/index.umd.js"
   },
   "keywords": [
     "bible",

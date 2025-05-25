@@ -4,7 +4,7 @@ describe('Bible Utils', () => {
     describe('getBook()', () => {
         it('returns Genesis book object', () => {
             const result = getBook('Genesis');
-            expect(result?.book).toBe('genesis');
+            expect(result?.book).toBe('Genesis');
             expect(result?.aliases).toContain('gen');
             expect(result?.chapters.length).toBe(50);
         });
@@ -12,7 +12,7 @@ describe('Bible Utils', () => {
         it('returns correct book object for alias case-insensitively', () => {
             const alias = 'GeN';
             const result = getBook(alias);
-            expect(result?.book).toBe('genesis');
+            expect(result?.book).toBe('Genesis');
         });
 
         it('returns null for unknown book', () => {
