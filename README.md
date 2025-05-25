@@ -56,6 +56,15 @@ CommonJS
 ```bash
 const { parseAndValidateReference } = require('@allemandi/bible-validate');
 ```
+UMD (Browser)
+```bash
+<script src="https://unpkg.com/@allemandi/bible-validate"></script>
+<script>
+  const result = window.bibleValidate.parseAndValidateReference('John 3:16');
+  console.log(result);
+</script>
+```
+
 
 ## 📦 API
 `parseAndValidateReference(reference: string, options?: { structured?: boolean })`
