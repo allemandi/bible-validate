@@ -1,40 +1,39 @@
 {
-  "name": "@allemandi/bible-validate",
-  "version": "1.0.1",
-  "description": "Utilities for Bible passage validation",
-  "main": "dist/index.cjs",
-  "module": "dist/index.module.js",
-  "browser": "dist/index.umd.js",
-  "exports": {
-    "import": "./dist/index.module.js",
-    "require": "./dist/index.cjs",
-    "browser": "./dist/index.umd.js"
-  },
-  "keywords": [
-    "bible",
-    "validation",
-    "verses"
-  ],
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "lint": "eslint .",
-    "build": "microbundle --name bibleValidate"
-  },
-  "source": "src/index.js",
-  "type": "module",
-  "repository": "https://github.com/allemandi/bible-validate",
-  "author": "allemandi <69766017+allemandi@users.noreply.github.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "@eslint/js": "^9.27.0",
-    "eslint": "^9.27.0",
-    "globals": "^16.1.0",
-    "jest": "^29.7.0",
-    "microbundle": "^0.15.1"
-  }
+    "name": "@allemandi/bible-validate",
+    "version": "1.0.2",
+    "description": "Utilities for Bible passage validation",
+    "main": "dist/index.cjs",
+    "module": "dist/index.module.js",
+    "unpkg": "dist/index.umd.js",
+    "exports": {
+        "import": "./dist/index.module.js",
+        "require": "./dist/index.cjs"
+    },
+    "keywords": [
+        "bible",
+        "validation",
+        "verses"
+    ],
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "test": "node --experimental-vm-modules node_modules/.bin/jest",
+        "lint": "eslint .",
+        "build": "microbundle --name bibleValidate"
+    },
+    "source": "src/index.js",
+    "type": "module",
+    "repository": "https://github.com/allemandi/bible-validate",
+    "author": "allemandi <69766017+allemandi@users.noreply.github.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "@eslint/js": "^9.27.0",
+        "eslint": "^9.27.0",
+        "globals": "^16.1.0",
+        "jest": "^29.7.0",
+        "microbundle": "^0.15.1"
+    }
 }
