@@ -127,9 +127,10 @@ describe('Bible Utils', () => {
             });
 
             it('returns null for invalid book or chapter out of range', () => {
-                expect(listVerses('UnknownBook', 1)).toBeNull();
+                expect(listVerses('Genesis')).toBeNull();
                 expect(listVerses('Genesis', 0)).toBeNull();
                 expect(listVerses('Genesis', 999)).toBeNull();
+                expect(listVerses('UnknownBook', 1)).toBeNull();
             });
         });
     });
