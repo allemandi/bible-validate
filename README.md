@@ -15,7 +15,6 @@
 - [🚀 Quick Usage Examples](#-quick-usage-examples)
 - [📦 API](#-api)
 - [🧪 Tests](#-tests)
-- [📦 Build Details](#-build-details)
 - [🤝 Contributing](#-contributing)
 
 
@@ -447,7 +446,7 @@ isValidVerses('Judas', 1, 1);          // false (invalid book)
 isValidVerses('Genesis', 0, 1);        // false (invalid chapter)
 ```
 
-### isValidReference(book, chapter, verseStart, verseEnd = null)
+### `isValidReference(book, chapter, verseStart, verseEnd = null)`
 - Checks if the full reference (book, chapter, verse/range) is valid.
 
 #### Parameters
@@ -472,6 +471,88 @@ isValidReference('Genesis', 'one', 'one'); // false
 isValidReference('gEnEsIs', 1, 1);         // true (case-insensitive book)
 ```
 
+### `listBibleBooks()`
+- Returns a list of all canonical Bible book names in proper display format.
+
+#### Returns
+- `string[]`: An array of book names indexed to canon order.
+
+#### Examples
+```js
+listBibleBooks();
+// => ["Genesis", "Exodus", ..., "Revelation"]
+```
+
+### `listAliases(bookName, options)`
+- Returns an array of all known aliases for a given book, including its canonical name.
+
+#### Parameters
+- `bookName` (`string)`: A Bible book name or known alias.
+- `options` (`object`, optional):
+  - `normalized` (`boolean`, default `false`):
+    - If `true`, returns all aliases in normalized form (lowercase, no spaces or punctuation).
+    - If `false` or not set, returns display-friendly aliases (title-cased with spacing preserved).
+
+#### Returns
+- `string[]|null`: An array of aliases, or `null` if the book was not found.
+
+#### Examples
+```js
+listAliases('1 Corinthians');
+// => ["1 Corinthians", "1 Cor", "1 Co"]
+
+listAliases('1co', { normalized: true });
+// => ["1corinthians", "1cor", "1co"]
+
+listAliases('UnknownBook');
+// => null
+```
+### `listChapters(bookName)`
+- Returns the list of chapter numbers in a given book.
+
+#### Parameters
+- `bookName` (`string`): The book name or alias.
+
+#### Returns
+`number[]|null`: An array of chapter numbers (`[1, 2, ..., N]`), or `null` if the book is not found.
+
+#### Examples
+```js
+listChapters('Genesis');
+// => [1, 2, 3, ..., 50]
+
+listChapters('gen');
+// => [1, 2, ..., 50]
+
+listChapters('UnknownBook');
+// => null
+```
+
+### `listVerses(bookName, chapter)`
+- Returns the list of verse numbers in a given chapter of a book.
+
+#### Parameters
+- `bookName` (`string`): The book name or alias.
+- `chapter` (`number`): The chapter number.
+
+#### Returns
+`number[]|null`: An array of verse numbers (`[1, 2, ..., M]`), or `null` if the book and chapter are invalid.
+
+```js
+listVerses('Genesis', 1);
+// => [1, 2, ..., 31]
+
+listVerses('gen', 2);
+// => [1, 2, ..., 25]
+
+listVerses('gen', 100);
+// => null
+
+listVerses('UnknownBook', 1);
+// => null
+```
+
+Examples
 ## 🧪 Tests
 ```bash
 # Run the test suite with Jest
@@ -479,14 +560,6 @@ yarn test
 # or
 npm test
 ```
-
-## 📦 Build Details
-This package is bundled with microbundle, providing:
-- ESM (recommended for modern projects)
-- CommonJS for Node.js compatibility
-- UMD (for use directly in browsers)
-
-Import as shown above for your environment.
 
 ## 🤝 Contributing
 If you have ideas, improvements, or new features:
