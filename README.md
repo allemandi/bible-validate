@@ -3,8 +3,21 @@
 [![NPM Version](https://img.shields.io/npm/v/@allemandi/bible-validate)](https://www.npmjs.com/package/@allemandi/bible-validate)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/allemandi/bible-validate/blob/main/LICENSE)
 
-> Utilities for validating and parsing Bible references
+> **Utilities for validating and parsing Bible references**
+> 
 > Supports ESM, CommonJS, and UMD – works in modern builds, Node.js, and browsers.
+
+
+<!-- omit from toc -->
+## 🔖 Table of Contents
+- [✨ Features](#-features)
+- [🛠️ Installation](#️-installation)
+- [🚀 Quick Usage Examples](#-quick-usage-examples)
+- [📦 API](#-api)
+- [🧪 Tests](#-tests)
+- [📦 Build Details](#-build-details)
+- [🤝 Contributing](#-contributing)
+
 
 ## ✨ Features
 
@@ -25,7 +38,7 @@ npm install @allemandi/bible-validate
 
 ## 🚀 Quick Usage Examples
 ESM
-```bash
+```js
 import {
     parseAndValidateReference,
     isValidBook,
@@ -53,7 +66,7 @@ console.log(isValidBook('Second Chronicles')); // true
 console.log(getVerseCount('Rev', 3)) // 22
 ```
 CommonJS
-```bash
+```js
 const { parseAndValidateReference } = require('@allemandi/bible-validate');
 ```
 UMD (Browser)
@@ -67,67 +80,397 @@ UMD (Browser)
 
 
 ## 📦 API
-`parseAndValidateReference(reference: string, options?: { structured?: boolean })`
+### `formatReference({ book, chapter, verseStart, verseEnd })`
 
-Parses and validates a Bible reference string. Returns an object with:
-- isValid (boolean)
-- error (string|null)
-- original (input string)
-- formatted (string) - human-readable reference
-- optionally (if { structured: true }):
-  - book (string)
-  - chapter (number)
-  - verseStart (number|null)
-  - verseEnd (number|null)
+- Formats a parsed Bible reference object into a human-readable string.
 
-`formatReference({ book, chapter, verseStart, verseEnd })`
+#### Parameters
 
-Formats a Bible reference object into a string, e.g., "Genesis 1:1-5".
+- `book` (`string`): The name of the Bible book.
+- `chapter` (`number`): The chapter number.
+- `verseStart` (`number`, optional): The starting verse number.
+- `verseEnd` (`number`, optional): The ending verse number.
 
-`getBook(bookName: string): BookObject | null`
+#### Returns
 
- Returns the full book object (including aliases and chapter data) if valid, otherwise null.
+- `string`: A formatted string in the form:
+  - `"Book"` (if only book is provided)
+  - `"Book Chapter"` (if no verses provided)
+  - `"Book Chapter:Verse"` (if a single verse is provided)
+  - `"Book Chapter:Start-End"` (if a verse range is provided)
 
-`getChapterCount(bookName: string): number | null`
+#### Examples
 
-Returns the number of chapters in the specified book, or null if invalid.
+```js
+formatReference({ book: 'Genesis' });
+// => 'Genesis'
 
-`getVerseCount(bookName: string, chapter: number): number | null`
+formatReference({ book: 'Genesis', chapter: 1 });
+// => 'Genesis 1'
 
-Returns the number of verses in the specified chapter of the book, or null if invalid.
+formatReference({ book: 'Genesis', chapter: 1, verseStart: 1 });
+// => 'Genesis 1:1'
 
-`normalizeBookName(bookName: string | null): string | null`
+formatReference({ book: 'Genesis', chapter: 1, verseStart: 1, verseEnd: 5 });
+// => 'Genesis 1:1-5'
 
-Normalizes a book name string by trimming and converting to lowercase for consistent comparisons.
+formatReference({ book: 'Genesis', chapter: 1, verseStart: 3, verseEnd: 3 });
+// => 'Genesis 1:3'
+```
 
-`parseChapterVerse(str: string): { chapter: number, verseStart: number|null, verseEnd: number|null } | null`
+### parseAndValidateReference(reference, { structured = false } = {})
 
-Parse chapter and verse portion from a string. Supports single chapters, chapter+verse, and verse ranges.
+- Parses a Bible reference string and validates its structure and content.
 
-`extractBookAndRange(ref: string): [string|null, string|null]`
+#### Parameters
 
-Extracts the book name and chapter/verse range strings from a reference string.
+- reference (string): The Bible reference string to parse (e.g., 'Genesis 1:1-3').
+- structured (boolean, optional): Whether to return a structured object. Default: false.
 
-`parseBibleReference(ref: string): { book: string|null, chapter: number|null, verseStart: number|null, verseEnd: number|null } | null`
-Parse a full Bible reference into normalized book and chapter/verse info.
+#### Returns
+- If the input is invalid:
 
+```js
+{
+  isValid: false,
+  error: string,         // Description of the validation failure
+  original: string|null  // The original input value
+}
+```
 
-`isValidBook(bookName: string): boolean`
+- If the input is valid and `structured` is `false`:
+```js
+{
+  isValid: true,
+  formatted: string,     // Formatted reference string
+  error: null,
+  original: string       // Original input
+}
+```
 
-Returns true if the given book name or alias is valid.
+- If the input is valid and `structured` is `true`:
+```js
+{
+  isValid: true,
+  book: string,
+  chapter: number,
+  verseStart: number,
+  verseEnd: number|null,
+  formatted: string,
+  error: null,
+  original: string
+}
+```
+#### Examples
+```js
+parseAndValidateReference('');
+// => { isValid: false, error: 'Empty or invalid input', original: '' }
 
-`isValidChapter(bookName: string, chapter: number): boolean`
+parseAndValidateReference('Book of Judas 1:1');
+// => { isValid: false, error: 'Invalid book name', original: 'Book of Judas 1:1' }
 
-Returns true if the chapter number is valid for the specified book.
+parseAndValidateReference('Genesis 99:1');
+// => { isValid: false, error: 'Invalid chapter or verse', original: 'Genesis 99:1' }
 
-`isValidVerses(bookName: string, chapter: number, verseStart: number, verseEnd?: number): boolean`
+parseAndValidateReference('Genesis 1:1');
+// => { isValid: true, formatted: 'Genesis 1:1', error: null, original: 'Genesis 1:1' }
 
-Returns true if the verse(s) are valid within the specified book and chapter.
+parseAndValidateReference('Genesis 1:1-3');
+// => { isValid: true, formatted: 'Genesis 1:1-3', error: null, original: 'Genesis 1:1-3' }
 
-`isValidReference(bookName: string, chapter: number, verse: number): boolean`
+parseAndValidateReference('Genesis 1:1', { structured: true });
+// => {
+//   isValid: true,
+//   book: 'Genesis',
+//   chapter: 1,
+//   verseStart: 1,
+//   verseEnd: null,
+//   formatted: 'Genesis 1:1',
+//   error: null,
+//   original: 'Genesis 1:1'
+// }
 
-Returns true if the full reference (book, chapter, and verse) is valid.
+parseAndValidateReference('gEnEsIs 1:1');
+// => { isValid: true, formatted: 'Genesis 1:1', error: null, original: 'gEnEsIs 1:1' }
+```
 
+### `getBook(book)`
+
+- Looks up a Bible book by name or alias and returns detailed book metadata if found.
+
+#### Parameters
+
+- `book` (`string`): The name or alias of the book to look up.
+
+#### Returns
+
+- `object|null`: An object with the structure:
+
+```js
+  {
+    book: string,         // Standardized book name
+    aliases: string[],    // List of aliases
+    chapters: number[]    // Array of verse counts per chapter
+  }
+```
+
+- Or null if the book is not found.
+#### Examples
+
+```js
+getBook('Genesis');
+// => {
+//   book: 'Genesis',
+//   aliases: ['gen', ...],
+//   chapters: [31, 25, 24, ..., 26] // verses per chapter
+// }
+
+getBook('gen');
+// => { book: 'Genesis', ... }
+
+getBook('Judas');
+// => null
+```
+
+### getChapterCount(name)
+
+- Returns the number of chapters in a Bible book.
+
+#### Parameters
+- name (string): The book name or alias.
+
+#### Returns
+- number|null: The number of chapters in the book, or null if the book is not found.
+
+#### Examples
+```js
+getChapterCount('Genesis');
+// => 50
+
+getChapterCount('gen');
+// => 50
+
+getChapterCount('Judas');
+// => null
+```
+
+### getVerseCount(name, chapter)
+- Returns the number of verses in a specific chapter of a Bible book.
+
+#### Parameters
+- name (string): The book name or alias.
+- chapter (number): The chapter number (1-based index).
+
+#### Returns
+- number|null: Number of verses in the chapter, or null if the book or chapter is invalid.
+
+#### Examples
+
+```js
+getVerseCount('Genesis', 2);
+// => 25
+
+getVerseCount('Genesis', 999);
+// => null
+
+getVerseCount('Genesis', 0);
+// => null
+
+getVerseCount('Judas', 1);
+// => null
+```
+
+### `normalizeBookName(name)`
+
+- Normalizes a Bible book name by converting common ordinal prefixes to digits, lowercasing, and removing non-alphanumeric characters.
+
+#### Parameters
+
+- `name` (`string|null|undefined`): The book name to normalize.
+
+#### Returns
+
+- `string|null`: Normalized book name (e.g. `"1john"`, `"genesis"`) or `null` if input is null/undefined.
+
+#### Examples
+
+```js
+normalizeBookName('1st John');   // => '1john'
+normalizeBookName('second Kings'); // => '2kings'
+normalizeBookName('Iii John');   // => '3john'
+normalizeBookName('Genesis');    // => 'genesis'
+normalizeBookName(null);         // => null
+```
+
+### parseChapterVerse(str)
+- Parses the chapter and verse portion of a reference string into numeric components.
+
+#### Parameters
+- str (string|null|undefined): Chapter and verse string to parse.
+
+#### Returns
+- object|null: An object with:
+
+```js
+{
+  chapter: number,       // chapter number
+  verseStart: number|null, // starting verse or null
+  verseEnd: number|null    // ending verse or null
+}
+```
+or `null` if parsing fails.
+
+#### Examples
+```js
+parseChapterVerse('12');          // => { chapter: 12, verseStart: null, verseEnd: null }
+parseChapterVerse('5:3');         // => { chapter: 5, verseStart: 3, verseEnd: null }
+parseChapterVerse('Chapter 13 Verses 4–7'); // => { chapter: 13, verseStart: 4, verseEnd: 7 }
+parseChapterVerse('chap. 13, v3 to 8');     // => { chapter: 13, verseStart: 3, verseEnd: 8 }
+parseChapterVerse('nonsense');    // => null
+```
+
+### extractBookAndRange(ref)
+- Extracts the book name and chapter/verse range string from a full Bible reference.
+
+#### Parameters
+- ref (string|null|undefined): Full Bible reference string.
+
+#### Returns
+- [string|null, string|null]: Tuple with
+  - Book name (string) or `null`
+  - Chapter/verse range substring or `null`
+
+#### Examples
+```js
+extractBookAndRange('1st John 3:16');            // => ['1st John', '3:16']
+extractBookAndRange("John's Revelation 4:5");    // => ["John's Revelation", '4:5']
+extractBookAndRange('Genesis');                   // => ['Genesis', '']
+extractBookAndRange('');                          // => [null, null]
+```
+
+### parseBibleReference(ref)
+- Parses a full Bible reference string into normalized book and chapter/verse components.
+
+#### Parameters
+- `ref` (`string|null|undefined`): Reference string to parse.
+
+#### Returns
+- `object|null`: Parsed reference object with keys:
+```js
+{
+  book: string|null,        // normalized book name or null
+  chapter: number|null,     // chapter number or null
+  verseStart: number|null,  // starting verse or null
+  verseEnd: number|null     // ending verse or null
+}
+```
+
+or `null` if input invalid.
+
+#### Examples
+```js
+parseBibleReference('2nd Kings 4:2');
+// => { book: '2kings', chapter: 4, verseStart: 2, verseEnd: null }
+
+parseBibleReference('Iii JohN  Chap. 1 verses 9 to 11');
+// => { book: '3john', chapter: 1, verseStart: 9, verseEnd: 11 }
+
+parseBibleReference('Genesis');
+// => { book: 'genesis', chapter: null, verseStart: null, verseEnd: null }
+
+parseBibleReference('!!!');
+// => { book: null, chapter: null, verseStart: null, verseEnd: null }
+
+parseBibleReference(null);
+// => null
+```
+
+### `isValidBook(book)`
+
+- Checks if the given book name or alias corresponds to a valid Bible book.
+
+#### Parameters
+- `book` (`string|null|undefined`): Book name or alias to validate.
+
+#### Returns
+- `boolean`: `true` if the book is valid, `false` otherwise.
+
+#### Examples
+```js
+isValidBook('Genesis');  // true
+isValidBook('gEn');      // true (alias, case-insensitive)
+isValidBook('Judas');    // false (not a valid book)
+isValidBook('');         // false
+isValidBook(null);       // false
+```
+
+### isValidChapter(book, chapter)
+- Checks if the given chapter number is valid for the specified book.
+
+#### Parameters
+- `book` (`string|null|undefined`): Book name or alias.
+- `chapter` (`number|null|undefined`): Chapter number to validate.
+
+#### Returns
+`boolean`: `true` if the chapter is valid for the book, `false` otherwise.
+
+#### Examples
+```js
+isValidChapter('Genesis', 1);   // true
+isValidChapter('Genesis', 50);  // true (Genesis has 50 chapters)
+isValidChapter('Genesis', 51);  // false (chapter out of range)
+isValidChapter('Judas', 1);     // false (invalid book)
+isValidChapter(null, 1);        // false
+isValidChapter('Genesis', null); // false
+```
+
+### isValidVerses(book, chapter, verseStart, verseEnd = null)
+- Validates if a verse or verse range is valid within the specified book and chapter.
+
+#### Parameters
+- book (string|null|undefined): Book name or alias.
+- chapter (number|null|undefined): Chapter number.
+- verseStart (number|null|undefined): Starting verse number.
+- verseEnd (number|null|undefined, optional): Ending verse number (for ranges). Defaults to null.
+
+#### Returns
+- boolean: true if the verse or verse range is valid, false otherwise.
+
+#### Examples
+```js
+isValidVerses('Genesis', 1, 1);        // true (valid single verse)
+isValidVerses('Genesis', 1, 31);       // true (last verse in chapter 1)
+isValidVerses('Genesis', 1, 32);       // false (verse too high)
+isValidVerses('Genesis', 1, 1, 10);    // true (valid range)
+isValidVerses('Genesis', 1, 10, 5);    // false (end < start)
+isValidVerses('Judas', 1, 1);          // false (invalid book)
+isValidVerses('Genesis', 0, 1);        // false (invalid chapter)
+```
+
+### isValidReference(book, chapter, verseStart, verseEnd = null)
+- Checks if the full reference (book, chapter, verse/range) is valid.
+
+#### Parameters
+- book (string|null|undefined): Book name or alias.
+- chapter (number|null|undefined): Chapter number.
+- verseStart (number|null|undefined): Starting verse number.
+- verseEnd (number|null|undefined, optional): Ending verse number. Defaults to null.
+
+#### Returns
+- boolean: true if the complete reference is valid, false otherwise.
+
+#### Examples
+```js
+isValidReference('Genesis', 1, 1);         // true
+isValidReference('Genesis', 1, 31);        // true (last verse)
+isValidReference('Genesis', 1, 32);        // false (verse too high)
+isValidReference('Genesis', 0, 1);         // false (invalid chapter)
+isValidReference('Genesis', 1, 0);         // false (invalid verse)
+isValidReference('Blah', 1, 1);            // false (unknown book)
+isValidReference(null, 1, 1);               // false
+isValidReference('Genesis', 'one', 'one'); // false
+isValidReference('gEnEsIs', 1, 1);         // true (case-insensitive book)
+```
 
 ## 🧪 Tests
 ```bash

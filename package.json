@@ -1,7 +1,7 @@
 {
     "name": "@allemandi/bible-validate",
-    "version": "1.0.2",
-    "description": "Utilities for Bible passage validation",
+    "version": "1.0.3",
+    "description": "Utilities for validating and parsing Bible references",
     "main": "dist/index.cjs",
     "module": "dist/index.module.js",
     "unpkg": "dist/index.umd.js",
