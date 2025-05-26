@@ -1,6 +1,6 @@
 {
     "name": "@allemandi/bible-validate",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Utilities for validating and parsing Bible references",
     "main": "dist/index.cjs",
     "module": "dist/index.module.js",
@@ -10,9 +10,21 @@
         "require": "./dist/index.cjs"
     },
     "keywords": [
-        "bible",
-        "validation",
-        "verses"
+      "bible",
+      "scripture",
+      "bible-reference",
+      "bible-parser",
+      "bible-validation",
+      "reference-parser",
+      "verse-parser",
+      "chapter-verse",
+      "bible-books",
+      "bible-utils",
+      "bible-format",
+      "bible-api",
+      "umd",
+      "esm",
+      "commonjs"
     ],
     "files": [
         "dist",
