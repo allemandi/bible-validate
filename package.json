@@ -10,9 +10,21 @@
         "require": "./dist/index.cjs"
     },
     "keywords": [
-        "bible",
-        "validation",
-        "verses"
+      "bible",
+      "scripture",
+      "bible-reference",
+      "bible-parser",
+      "bible-validation",
+      "reference-parser",
+      "verse-parser",
+      "chapter-verse",
+      "bible-books",
+      "bible-utils",
+      "bible-format",
+      "bible-api",
+      "umd",
+      "esm",
+      "commonjs"
     ],
     "files": [
         "dist",
