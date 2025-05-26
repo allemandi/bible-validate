@@ -13,7 +13,7 @@ describe('Bible Utils', () => {
         it('returns Genesis book object', () => {
             const result = getBook('Genesis');
             expect(result?.book).toBe('Genesis');
-            expect(result?.aliases).toContain('gen');
+            expect(result?.aliases).toContain('Gen');
             expect(result?.chapters.length).toBe(50);
         });
 

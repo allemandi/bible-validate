@@ -15,7 +15,6 @@
 - [🚀 Quick Usage Examples](#-quick-usage-examples)
 - [📦 API](#-api)
 - [🧪 Tests](#-tests)
-- [📦 Build Details](#-build-details)
 - [🤝 Contributing](#-contributing)
 
 
@@ -561,14 +560,6 @@ yarn test
 # or
 npm test
 ```
-
-## 📦 Build Details
-This package is bundled with microbundle, providing:
-- ESM (recommended for modern projects)
-- CommonJS for Node.js compatibility
-- UMD (for use directly in browsers)
-
-Import as shown above for your environment.
 
 ## 🤝 Contributing
 If you have ideas, improvements, or new features:
