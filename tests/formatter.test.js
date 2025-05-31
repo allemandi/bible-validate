@@ -74,7 +74,7 @@ describe('parseAndValidateReference()', () => {
     });
 
     it('returns structured output when flag is passed', () => {
-        const result = parseAndValidateReference('Genesis 1:1', { structured: true });
+        const result = parseAndValidateReference('gEnEsIs 1 verse 1', { structured: true });
         expect(result).toMatchObject({
             isValid: true,
             book: 'Genesis',
@@ -82,6 +82,7 @@ describe('parseAndValidateReference()', () => {
             verseStart: 1,
             verseEnd: null,
             formatted: 'Genesis 1:1',
+            original: 'gEnEsIs 1 verse 1',
         });
     });
 

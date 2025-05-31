@@ -10,21 +10,21 @@
         "require": "./dist/index.cjs"
     },
     "keywords": [
-      "bible",
-      "scripture",
-      "bible-reference",
-      "bible-parser",
-      "bible-validation",
-      "reference-parser",
-      "verse-parser",
-      "chapter-verse",
-      "bible-books",
-      "bible-utils",
-      "bible-format",
-      "bible-api",
-      "umd",
-      "esm",
-      "commonjs"
+        "bible",
+        "scripture",
+        "bible-reference",
+        "bible-parser",
+        "bible-validation",
+        "reference-parser",
+        "verse-parser",
+        "chapter-verse",
+        "bible-books",
+        "bible-utils",
+        "bible-format",
+        "bible-api",
+        "umd",
+        "esm",
+        "commonjs"
     ],
     "files": [
         "dist",
@@ -34,7 +34,8 @@
     "scripts": {
         "test": "node --experimental-vm-modules node_modules/.bin/jest",
         "lint": "eslint .",
-        "build": "microbundle --name bibleValidate"
+        "build": "microbundle --name bibleValidate",
+        "docs": "documentation build ./src/*.js -f md -o ./docs/API.md"
     },
     "source": "src/index.js",
     "type": "module",
@@ -43,6 +44,7 @@
     "license": "MIT",
     "devDependencies": {
         "@eslint/js": "^9.27.0",
+        "documentation": "^14.0.3",
         "eslint": "^9.27.0",
         "globals": "^16.1.0",
         "jest": "^29.7.0",
