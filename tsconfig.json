@@ -16,7 +16,7 @@
         "moduleResolution": "Node",
         "outDir": "dist",
         "strict": true,
-         "esModuleInterop": true
+        "esModuleInterop": true
     },
     
 }
