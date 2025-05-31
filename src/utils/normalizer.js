@@ -1,25 +1,28 @@
 /**
  * Normalize book ref
- * - Converts common prefixes like "1st", "first" to "1"
+ * - unified string prefix remover, "The Epistle to the", "Book of", "Gospel according to"
+ * - Converts common ordinals after string remover, "1st", "first" to "1"
  * - Lowercases and removes non-alphanumeric characters
  */
 function normalizeBookName(name) {
     if (!name) return null;
-
     const prefixMap = {
         '1st': '1', 'first': '1',
         '2nd': '2', 'second': '2',
         '3rd': '3', 'third': '3',
         'iii': '3', 'ii': '2', 'i': '1',
     };
-    const prefixRegex = /^(first|1st|second|2nd|third|3rd|iii|ii|i)/;
-
-    const cleaned = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const prefixMatch = cleaned.match(prefixRegex);
-
-    return prefixMatch
-        ? prefixMap[prefixMatch[0]] + cleaned.slice(prefixMatch[0].length)
-        : cleaned;
+    let cleaned = name.trim().toLowerCase().replace(/\s+/g, ' ');
+    cleaned = cleaned.replace(
+        /^(?:the\s+)?(?:(book|epistle|gospel|letter)\s+(?:according\s+)?(?:to|for|of)(?:\s+the)?\s*)?/,
+        ''
+    );
+    const prefixMatch = cleaned.match(/^(first|1st|second|2nd|third|3rd|iii|ii|i)\b/);
+    if (prefixMatch) {
+        const prefix = prefixMap[prefixMatch[0]];
+        cleaned = prefix + ' ' + cleaned.slice(prefixMatch[0].length).trim();
+    }
+    return cleaned.replace(/[^a-z0-9]/g, '');
 }
 
 /**

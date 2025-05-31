@@ -17,10 +17,10 @@ describe('Bible Utils', () => {
             expect(result?.chapters.length).toBe(50);
         });
 
-        it('returns correct book object for alias case-insensitively', () => {
-            const alias = 'GeN';
+        it('returns correct book object for aliases normalized and case-insensitively', () => {
+            const alias = 'The CANticle of CantiClEs !!?*';
             const result = getBook(alias);
-            expect(result?.book).toBe('Genesis');
+            expect(result?.book).toBe('Song of Solomon');
         });
 
         it('returns null for unknown book', () => {
