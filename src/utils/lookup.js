@@ -1,5 +1,8 @@
 import bibleCounts from '../data/bibleCounts.json';
 import { normalizeBookName } from './normalizer';
+/**
+ * @import { BibleBook } from './types.js'
+ */
 
 // Build a Map at load time for fast lookup by normalized book name or alias
 const bookCache = new Map();
@@ -170,12 +173,3 @@ export {
     listChapters,
     listVerses
 };
-
-// --- JSDoc Type Definitions ---
-/**
-* @private
-* @typedef {Object} BibleBook
-* @property {string} book - The canonical name of the book.
-* @property {string[]} aliases - Alternative names or abbreviations for the book.
-* @property {Array<number>} chapters - Array representing the chapters of the book.
-*/

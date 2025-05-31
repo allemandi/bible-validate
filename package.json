@@ -48,7 +48,7 @@
         "docs": "documentation build src/*.js -f md -o ./docs/API.md --access public --sort-order kind",
         "build:js": "microbundle --name bibleValidate",
         "build:types": "tsc --project tsconfig.json",
-        "build": "npm run build:js && npm run build:types"
+        "build": "yarn run build:js && yarn run build:types"
     },
     "repository": "https://github.com/allemandi/bible-validate",
     "author": "allemandi <69766017+allemandi@users.noreply.github.com>",
