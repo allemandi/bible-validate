@@ -41,6 +41,26 @@ function formatReference({ book, chapter, verseStart, verseEnd }) {
 }
 
 /**
+ * @typedef {Object} SimpleResult
+ * @property {boolean} isValid
+ * @property {string|null} error
+ * @property {string} original
+ * @property {string} [formatted]
+ */
+
+/**
+ * @typedef {Object} StructuredResult
+ * @property {boolean} isValid
+ * @property {string} book
+ * @property {number} chapter
+ * @property {number|null} verseStart
+ * @property {number|null} verseEnd
+ * @property {string|null} error
+ * @property {string} original
+ * @property {string} [formatted]
+ */
+
+/**
  * Parses and validates a Bible reference string.
  *
  * @param {string} reference - The raw Bible reference string to be parsed, normalized, and formatted (e.g., "Genesis 1:1", "Letter to the Romans. Ch 2 , 1 to 3").
