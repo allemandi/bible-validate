@@ -6,3 +6,4 @@
  * @property {number|null} verseStart
  * @property {number|null} verseEnd
  */
+export {};

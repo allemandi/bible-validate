@@ -66,6 +66,7 @@ function parseAndValidateReference(reference, { structured = false } = {}) {
 
     /** 
      * @private
+     * @import { ParsedReference } from './types.js'
      * @type {ParsedReference|null}
      */
     const parsed = parseBibleReference(reference);
@@ -131,3 +132,4 @@ export {
  * @property {string} [formatted]
  *
  */
+

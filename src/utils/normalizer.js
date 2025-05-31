@@ -126,6 +126,7 @@ function extractBookAndRange(ref) {
 /**
  * Parses a Bible reference string into its book, chapter, and verse components, supporting various formats and spacing.
  * @public
+ * @import { ParsedReference } from './types.js'
  * @param {string} ref - The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
  * @returns {ParsedReference|null} - An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
  * @example
