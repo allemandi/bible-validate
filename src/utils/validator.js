@@ -28,6 +28,7 @@ import { getBook } from './lookup.js';
  * isValidBook(undefined); // false
  */
 function isValidBook(book) {
+    if (typeof book !== 'string' || book.trim() === '') return false;
     return getBook(book) !== null;
 }
 

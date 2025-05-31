@@ -23,6 +23,7 @@
  */
 function normalizeBookName(name) {
     if (!name) return null;
+    /** @type {Record<string, string>} */
     const prefixMap = {
         '1st': '1', 'first': '1',
         '2nd': '2', 'second': '2',
@@ -36,8 +37,11 @@ function normalizeBookName(name) {
     );
     const prefixMatch = cleaned.match(/^(first|1st|second|2nd|third|3rd|iii|ii|i)\b/);
     if (prefixMatch) {
-        const prefix = prefixMap[prefixMatch[0]];
-        cleaned = prefix + ' ' + cleaned.slice(prefixMatch[0].length).trim();
+        const key = prefixMatch[0];
+        if (key in prefixMap) {
+            const prefix = prefixMap[key];
+            cleaned = prefix + ' ' + cleaned.slice(key.length).trim();
+        }
     }
     return cleaned.replace(/[^a-z0-9]/g, '');
 }
@@ -147,11 +151,12 @@ function extractBookAndRange(ref) {
     return [cleaned, ''];
 }
 
+
 /**
  * Parses a Bible reference string into its book, chapter, and verse components, supporting various formats and spacing.
  *
  * @param {string} ref - The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
- * @returns {Object|null} - An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
+ * @returns {ParsedReference|null} - An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
  *
  * @example
  * // Parses ordinal prefix and returns structured reference
@@ -187,7 +192,7 @@ function parseBibleReference(ref) {
     const cleanedRef = ref.trim().replace(/\s+/g, ' ');
     const [bookRaw, chapterVerseRaw] = extractBookAndRange(cleanedRef);
 
-    const book = normalizeBookName(bookRaw);
+    const book = bookRaw && normalizeBookName(bookRaw);
 
     if (!book) {
         return {
@@ -196,8 +201,9 @@ function parseBibleReference(ref) {
             verseStart: null,
             verseEnd: null,
         };
-    }
-    const chapVerse = parseChapterVerse(chapterVerseRaw);
+    };
+
+    const chapVerse = chapterVerseRaw ? parseChapterVerse(chapterVerseRaw) : null;
     return {
         book,
         chapter: chapVerse?.chapter ?? null,

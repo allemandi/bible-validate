@@ -42,6 +42,7 @@
     ],
     "scripts": {
         "test": "node --experimental-vm-modules node_modules/.bin/jest",
+        "check-types": "tsc --noEmit",
         "lint": "eslint .",
         "docs": "documentation build src/*.js -f md -o ./docs/API.md --sort-order kind",
         "build:js": "microbundle --name bibleValidate",

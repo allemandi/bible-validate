@@ -5,10 +5,17 @@ import { normalizeBookName } from './normalizer';
 const bookCache = new Map();
 
 /**
+ * @typedef {Object} BibleBook
+ * @property {string} book - The canonical name of the book.
+ * @property {string[]} aliases - Alternative names or abbreviations for the book.
+ * @property {Array<number>} chapters - Array representing the chapters of the book.
+ */
+
+/**
  * Retrieves a book object from the Bible collection matching the given book name or its aliases, ignoring case and special characters.
  *
  * @param {string} book - The name or alias of the book to lookup, which will be normalized internally.
- * @returns {Object|null} - The matched book object containing book name, aliases, and chapters, or null if no match is found.
+ * @returns {BibleBook|null} - The matched book object containing book name, aliases, and chapters, or null if no match is found.
  *
  * @example
  * // Returns the Genesis book object with its aliases and 50 chapters
@@ -23,23 +30,23 @@ const bookCache = new Map();
  * getBook('Judas'); // null
  */
 function getBook(book) {
-  if (!book) return null;
+    if (!book) return null;
 
-  const normalized = normalizeBookName(book);
-  if (bookCache.has(normalized)) {
-    return bookCache.get(normalized);
-  }
+    const normalized = normalizeBookName(book);
+    if (bookCache.has(normalized)) {
+        return bookCache.get(normalized);
+    }
 
-  const found = bibleCounts.find(b => {
-    const normalizedBook = normalizeBookName(b.book);
-    if (normalizedBook === normalized) return true;
+    const found = bibleCounts.find(b => {
+        const normalizedBook = normalizeBookName(b.book);
+        if (normalizedBook === normalized) return true;
 
-    const normalizedAliases = b.aliases.map(normalizeBookName);
-    return normalizedAliases.includes(normalized);
-  }) || null;
+        const normalizedAliases = b.aliases.map(normalizeBookName);
+        return normalizedAliases.includes(normalized);
+    }) || null;
 
-  bookCache.set(normalized, found);
-  return found;
+    bookCache.set(normalized, found);
+    return found;
 }
 
 /**
@@ -57,8 +64,8 @@ function getBook(book) {
  * getChapterCount('Judas');
  */
 function getChapterCount(name) {
-  const book = getBook(name);
-  return book ? book.chapters.length : null;
+    const book = getBook(name);
+    return book ? book.chapters.length : null;
 }
 
 /**
@@ -85,9 +92,9 @@ function getChapterCount(name) {
  * getVerseCount('Genesis', 0);
  */
 function getVerseCount(name, chapter) {
-  const book = getBook(name);
-  if (!book || chapter < 1 || chapter > book.chapters.length) return null;
-  return book.chapters[chapter - 1];
+    const book = getBook(name);
+    if (!book || chapter < 1 || chapter > book.chapters.length) return null;
+    return book.chapters[chapter - 1];
 }
 
 /**
@@ -106,7 +113,7 @@ function getVerseCount(name, chapter) {
  * console.log(books[books.length - 1]); // "Revelation"
  */
 function listBibleBooks() {
-  return bibleCounts.map(b => b.book);
+    return bibleCounts.map(b => b.book);
 }
 
 /**
@@ -134,12 +141,13 @@ function listBibleBooks() {
  * listAliases('');            // null
  */
 function listAliases(bookName, { normalized = false } = {}) {
-  const book = getBook(bookName);
-  if (!book) return null;
-
-  if (normalized) {
-    return [book.book, ...book.aliases].map(normalizeBookName);
-  }
+    const book = getBook(bookName);
+    if (!book) return null;
+    if (normalized) {
+        return [book.book, ...book.aliases]
+            .map(normalizeBookName)
+            .filter(s => s != null);
+    }
     return [book.book, ...book.aliases];
 }
 
@@ -158,9 +166,9 @@ function listAliases(bookName, { normalized = false } = {}) {
  * listChapters('UnknownBook'); // null
  */
 function listChapters(bookName) {
-  const count = getChapterCount(bookName);
-  if (count == null) return null;
-  return Array.from({ length: count }, (_, i) => i + 1);
+    const count = getChapterCount(bookName);
+    if (count == null) return null;
+    return Array.from({ length: count }, (_, i) => i + 1);
 }
 
 
@@ -186,9 +194,9 @@ function listChapters(bookName) {
  * listVerses('UnknownBook', 1); // null
  */
 function listVerses(bookName, chapter) {
-  const verseCount = getVerseCount(bookName, chapter);
-  if (verseCount == null) return null;
-  return Array.from({ length: verseCount }, (_, i) => i + 1);
+    const verseCount = getVerseCount(bookName, chapter);
+    if (verseCount == null) return null;
+    return Array.from({ length: verseCount }, (_, i) => i + 1);
 }
 
 export {
