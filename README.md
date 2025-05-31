@@ -14,6 +14,7 @@
 - [🛠️ Installation](#️-installation)
 - [🚀 Quick Usage Examples](#-quick-usage-examples)
 - [📦 API](#-api)
+- [Deprecated](#deprecated)
 - [🧪 Tests](#-tests)
 - [🤝 Contributing](#-contributing)
 
@@ -540,6 +541,10 @@ listVerses('gen', 100);
 listVerses('UnknownBook', 1);
 // => null
 ```
+
+## Deprecated
+
+- `isValidVerses(book, chapter, verseStart, verseEnd?)` → Use `isValidReference(...)` instead.
 
 Examples
 ## 🧪 Tests
