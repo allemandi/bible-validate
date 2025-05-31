@@ -80,16 +80,14 @@ UMD (Browser)
 
 ## 📦 API
 ### ℹ️ Input Normalization
-String inputs get minimal normalization and basic alias matching:
+String inputs get minimal normalization and basic alias matching, including:
 - `"First KinGs"` → `"1 Kings"`
 - `"Gen chapter 12, verses 2:4"` → `"Genesis 12:2–4"`
 - `"Canticles"` → `"Song of Solomon"`
+- `"Gospel according to John"` → `"John"`
 - Case, punctuation, and ordinals normalized
 
-> ⚠️ Prefixes like "Book of", "The Gospel According to", and other fuzzy matching aren’t handled.
-
 Normalization details and examples are included in documentation.
-
 
 ### `formatReference({ book, chapter, verseStart, verseEnd })`
 
@@ -293,11 +291,14 @@ getVerseCount('Judas', 1);
 
 ### `normalizeBookName(name)`
 
-- Normalizes a Bible book name by converting common ordinal prefixes to digits, lowercasing, and removing non-alphanumeric characters.
+- Normalizes a Bible book name by:
+  - Converting common ordinal prefixes to digits
+  - Removing prefixes like `"The Epistle to the"`, `"Book of"`, `"Gospel according to"`, `"Letter to"`
+  - Lowercasing and removing non-alphanumeric characters
 
 #### Parameters
 
-- `name` (`string|null|undefined`): The book name to normalize.
+- `name` (`string|null|undefined`): Book name or alias to normalize.
 
 #### Returns
 
@@ -309,8 +310,13 @@ getVerseCount('Judas', 1);
 normalizeBookName('1st John');   // => '1john'
 normalizeBookName('second Kings'); // => '2kings'
 normalizeBookName('Iii John');   // => '3john'
-normalizeBookName('Genesis');    // => 'genesis'
-normalizeBookName(null);         // => null
+normalizeBookName('The Epistle to the Romans'); // => 'romans'
+normalizeBookName('Book of Psalms');      // => 'psalms'
+normalizeBookName('Gospel according to John'); // => 'john'
+normalizeBookName('The Song of Solomon'); // => 'songofsolomon'
+normalizeBookName('1st! Samuel?');        // => '1samuel'
+normalizeBookName('   ');                  // => ''
+normalizeBookName(null);                   // => null
 ```
 
 ### parseChapterVerse(str)
@@ -340,7 +346,7 @@ parseChapterVerse('chap. 13, v3 to 8');     // => { chapter: 13, verseStart: 3, 
 parseChapterVerse('nonsense');    // => null
 ```
 
-### extractBookAndRange(ref)
+### `extractBookAndRange(ref)`
 - Extracts the book name and chapter/verse range string from a full Bible reference.
 
 #### Parameters
@@ -415,7 +421,7 @@ isValidBook('');         // false
 isValidBook(null);       // false
 ```
 
-### isValidChapter(book, chapter)
+### `isValidChapter(book, chapter)`
 - Checks if the given chapter number is valid for the specified book.
 
 #### Parameters

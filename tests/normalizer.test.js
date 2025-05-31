@@ -6,28 +6,34 @@ describe('normalizeBookName()', () => {
         expect(normalizeBookName('second Kings')).toBe('2kings');
         expect(normalizeBookName('Iii John')).toBe('3john');
     });
+    it('removes unified string prefixes like "The Epistle to the", "Book of", "Gospel according to"', () => {
+        expect(normalizeBookName('The Epistle to the Romans')).toBe('romans');
+        expect(normalizeBookName('Book of Psalms')).toBe('psalms');
+        expect(normalizeBookName('Gospel according to John')).toBe('john');
+        expect(normalizeBookName('The Song of Solomon')).toBe('songofsolomon');
+        expect(normalizeBookName('The Gospel of Luke')).toBe('luke');
+    });
 
     it('removes non-alphanumeric characters', () => {
         expect(normalizeBookName("1st! Samuel?")).toBe("1samuel");
+        expect(normalizeBookName('Book of *EX*')).toBe('ex');
     });
 
     it('trims leading and trailing spaces', () => {
-        expect(normalizeBookName('  Genesis ')).toBe('genesis');
+        expect(normalizeBookName('  Gen ')).toBe('gen');
     });
 
     it('handles mixed case and extra spaces', () => {
         expect(normalizeBookName('  gEnEsIs  ')).toBe('genesis');
+         expect(normalizeBookName('  The   Epistle   to   the   Colossians  ')).toBe('colossians');
     });
 
     it('returns empty string if input is only spaces', () => {
         expect(normalizeBookName('   ')).toBe('');
     });
 
-    it('returns null if input is null', () => {
+    it('returns null if input is null or undefined', () => {
         expect(normalizeBookName(null)).toBeNull();
-    });
-
-    it('returns null if input is undefined', () => {
         expect(normalizeBookName(undefined)).toBeNull();
     });
 
