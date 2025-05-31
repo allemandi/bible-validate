@@ -22,7 +22,6 @@ describe('Bible Utils', () => {
             const result = getBook(alias);
             expect(result?.book).toBe('Song of Solomon');
         });
-
         it('returns null for unknown book', () => {
             expect(getBook('Judas')).toBeNull();
         });

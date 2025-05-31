@@ -1,8 +1,25 @@
 /**
- * Normalize book ref
- * - unified string prefix remover, "The Epistle to the", "Book of", "Gospel according to"
- * - Converts common ordinals after string remover, "1st", "first" to "1"
- * - Lowercases and removes non-alphanumeric characters
+ * Normalizes a Bible book name or alias by trimming spaces, removing common prefixes, 
+ * converting ordinal prefixes to digits, and stripping non-alphanumeric characters.
+ *
+ * @param {string} name - The raw book name or alias to normalize, possibly with prefixes, punctuation, and mixed case.
+ * @returns {string|null} - A cleaned lowercase alphanumeric string with numeric prefixes for ordinals, or null if input is null or undefined.
+ *
+ * @example
+ * // Converts ordinal prefix to digit and removes punctuation
+ * normalizeBookName('1st John'); // '1john'
+ *
+ * @example
+ * // Removes unified prefixes and lowercases the name
+ * normalizeBookName('The Epistle to the Romans'); // 'romans'
+ *
+ * @example
+ * // Strips non-alphanumeric characters and trims spaces
+ * normalizeBookName('  Book of *EX*  '); // 'ex'
+ *
+ * @example
+ * // Returns null if input is null or undefined
+ * normalizeBookName(null); // null
  */
 function normalizeBookName(name) {
     if (!name) return null;
@@ -26,11 +43,39 @@ function normalizeBookName(name) {
 }
 
 /**
- * Parse chapter and verse portion of a reference string.
- * Supports:
- * - single chapter ("23")
- * - chapter and verse ["4:2", "4 2"
- * - verse ranges ["chap. 13, v3 to 8", "Chapter 13 Verses 4–7"]
+ * Parses a string representing a chapter and optional verse or verse range
+ * into an object with numeric values.
+ *
+ * @param {string} str - The string containing chapter and verse references, which may include words, punctuation, and ranges.
+ * @returns {{chapter: number, verseStart: number|null, verseEnd: number|null}|null} - An object with the chapter number and optional verse start and end numbers, or null if no valid numbers are found.
+ *
+ * @example
+ * // Parses chapter only reference
+ * parseChapterVerse('12'); // { chapter: 12, verseStart: null, verseEnd: null }
+ *
+ * @example
+ * // Parses chapter and single verse reference
+ * parseChapterVerse('5:3'); // { chapter: 5, verseStart: 3, verseEnd: null }
+ *
+ * @example
+ * // Parses chapter with verse range including words and punctuation
+ * parseChapterVerse('Chapter 13 Verses 4–7'); // { chapter: 13, verseStart: 4, verseEnd: 7 }
+ *
+ * @example
+ * // Parses chapter with verse range using "to" as a separator
+ * parseChapterVerse('chap. 13, v3 to 8'); // { chapter: 13, verseStart: 3, verseEnd: 8 }
+ *
+ * @example
+ * // Returns null if no numeric chapter is present
+ * parseChapterVerse('nonsense'); // null
+ *
+ * @example
+ * // Parses chapter and verse range with extra whitespace and punctuation
+ * parseChapterVerse('  10 : 2  - 6 '); // { chapter: 10, verseStart: 2, verseEnd: 6 }
+ * 
+ * @example
+ * // Handles pure whitespace and number combination
+ * parseChapterVerse('  11  1   2 '); // { chapter: 11, verseStart: 1, verseEnd: 2 }
  */
 function parseChapterVerse(str) {
     if (!str) return null;
@@ -57,9 +102,34 @@ function parseChapterVerse(str) {
     }
 }
 /**
- * Extracts book name and chapter/verse range from a reference string.
- * - Book part is the first part of the string until a digit or end of string
- * - Identifies chapter strings like "chapter", "chap.", or digits 
+ * Splits a Bible reference string into the book name and chapter/verse range parts,
+ * trimming empty space. No further normalization.
+ *
+ * @param {string} ref - The Bible reference string containing a book name optionally followed by a chapter/verse range.
+ * @returns {[string|null, string|null]} - A tuple where the first element is the extracted book name and the second is the range; returns [null, null] if input is invalid or empty.
+ *
+ * @example
+ * // Extracts book and range from a standard reference
+ * extractBookAndRange('1st John 3:16'); // ['1st John', '3:16']
+ *
+ * @example
+ * // Extracts book name with punctuation and range
+ * extractBookAndRange("The Revelation 4:5"); // ["The Revelation", '4:5']
+ *
+ * @example
+ * // Returns book name with empty range when no range is given
+ * extractBookAndRange('Genesis'); // ['Genesis', '']
+ *
+ * @example
+ * // Returns [null, null] for empty or invalid input
+ * extractBookAndRange(''); // [null, null]
+ *
+ * @example
+ * // Handles leading spaces and complex ranges with simple chapter abbreviations
+ * extractBookAndRange(' Exodus   12. 1 to 3'); // ['Exodus', '12. 1 to 3']
+ * extractBookAndRange('Exodus Chapter 12:1-3'); // ['Exodus', 'Chapter 12:1-3']
+ * extractBookAndRange(' Exodus  Ch. 12. 1 to 3'); // ['Exodus', 'Ch. 12. 1 to 3']
+ * extractBookAndRange('second Kings Chape 1 to 3'); // ['second Kings Chape', '1 to 3']
  */
 function extractBookAndRange(ref) {
     if (!ref || typeof ref !== 'string') return [null, null];
@@ -77,6 +147,40 @@ function extractBookAndRange(ref) {
     return [cleaned, ''];
 }
 
+/**
+ * Parses a Bible reference string into its book, chapter, and verse components, supporting various formats and spacing.
+ *
+ * @param {string} ref - The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
+ * @returns {Object|null} - An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
+ *
+ * @example
+ * // Parses ordinal prefix and returns structured reference
+ * parseBibleReference('2nd Kings 4:2'); 
+ * // { book: '2kings', chapter: 4, verseStart: 2, verseEnd: null }
+ *
+ * @example
+ * // Handles mixed casing, chapter/verse labels, and verse range
+ * parseBibleReference(' Iii JohN  Chap. 1 verses 9 to  11'); 
+ * // { book: '3john', chapter: 1, verseStart: 9, verseEnd: 11 }
+ *
+ * @example
+ * // Returns null fields when chapter and verse are omitted
+ * parseBibleReference('Genesis'); 
+ * // { book: 'genesis', chapter: null, verseStart: null, verseEnd: null }
+ *
+ * @example
+ * // Cleans and parses input with excessive spacing
+ * parseBibleReference('  1st   Samuel    17 : 4-9 '); 
+ * // { book: '1samuel', chapter: 17, verseStart: 4, verseEnd: 9 }
+ *
+ * @example
+ * // Returns null for invalid or non-string input
+ * parseBibleReference('!!!'); 
+ * // { book: null, chapter: null, verseStart: null, verseEnd: null }
+ *
+ * @example
+ * parseBibleReference(42); // null
+ */
 function parseBibleReference(ref) {
     if (!ref || typeof ref !== 'string') return null;
 
@@ -93,9 +197,7 @@ function parseBibleReference(ref) {
             verseEnd: null,
         };
     }
-
     const chapVerse = parseChapterVerse(chapterVerseRaw);
-
     return {
         book,
         chapter: chapVerse?.chapter ?? null,
