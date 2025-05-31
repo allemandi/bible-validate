@@ -35,7 +35,7 @@
         "test": "node --experimental-vm-modules node_modules/.bin/jest",
         "lint": "eslint .",
         "build": "microbundle --name bibleValidate",
-        "docs": "documentation build ./src/*.js -f md -o ./docs/API.md"
+        "docs": "documentation build src/*.js -f md -o ./docs/API.md --sort-order kind "
     },
     "source": "src/index.js",
     "type": "module",

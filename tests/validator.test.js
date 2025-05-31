@@ -9,19 +9,15 @@ describe('Bible Reference Validator', () => {
         it('returns true for full book name', () => {
             expect(isValidBook('Genesis')).toBe(true);
         });
-
         it('returns true for alias (case-insensitive)', () => {
             expect(isValidBook('gEn')).toBe(true);
         });
-
         it('returns false for unknown book', () => {
             expect(isValidBook('Judas')).toBe(false);
         });
-
         it('returns false for empty string', () => {
             expect(isValidBook('')).toBe(false);
         });
-
         it('returns false for null or undefined', () => {
             expect(isValidBook(null)).toBe(false);
             expect(isValidBook(undefined)).toBe(false);
@@ -33,17 +29,14 @@ describe('Bible Reference Validator', () => {
             expect(isValidChapter('Genesis', 1)).toBe(true);
             expect(isValidChapter('Genesis', 50)).toBe(true);
         });
-
         it('returns false for invalid chapters', () => {
             expect(isValidChapter('Genesis', 0)).toBe(false);
             expect(isValidChapter('Genesis', 51)).toBe(false);
             expect(isValidChapter('Genesis', -1)).toBe(false);
         });
-
         it('returns false for invalid book', () => {
             expect(isValidChapter('Judas', 1)).toBe(false);
         });
-
         it('returns false for null or undefined inputs', () => {
             expect(isValidChapter(null, 1)).toBe(false);
             expect(isValidChapter('Genesis', null)).toBe(false);
