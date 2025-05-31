@@ -40,7 +40,7 @@ describe('Bible Utils', () => {
 
     describe('getVerseCount()', () => {
         it('returns 25 for Genesis 2', () => {
-            expect(getVerseCount('Genesis', 2)).toBe(25);
+            expect(getVerseCount('GeN.  ', 2)).toBe(25);
         });
 
         it('returns null for invalid book', () => {
