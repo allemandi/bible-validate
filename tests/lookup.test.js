@@ -22,7 +22,6 @@ describe('Bible Utils', () => {
             const result = getBook(alias);
             expect(result?.book).toBe('Song of Solomon');
         });
-
         it('returns null for unknown book', () => {
             expect(getBook('Judas')).toBeNull();
         });
@@ -56,18 +55,16 @@ describe('Bible Utils', () => {
         });
     });
 
-    describe('Bible List Functions', () => {
-        describe('listBibleBooks()', () => {
-            it('returns 66 elements in an array', () => {
-                const books = listBibleBooks();
-                expect(Array.isArray(books)).toBe(true);
-                expect(books.length).toBe(66);
-            });
-            it('returns Genesis / Revelation ordered first / last in array', () => {
-                const books = listBibleBooks();
-                expect(books[0]).toBe('Genesis');
-                expect(books[books.length - 1]).toBe('Revelation');
-            });
+    describe('listBibleBooks()', () => {
+        it('returns 66 elements in an array', () => {
+            const books = listBibleBooks();
+            expect(Array.isArray(books)).toBe(true);
+            expect(books.length).toBe(66);
+        });
+        it('returns Genesis / Revelation ordered first / last in array', () => {
+            const books = listBibleBooks();
+            expect(books[0]).toBe('Genesis');
+            expect(books[books.length - 1]).toBe('Revelation');
         });
     });
 
@@ -87,7 +84,7 @@ describe('Bible Utils', () => {
             expect(listAliases(null)).toBeNull();
             expect(listAliases('')).toBeNull();
         });
-        it('returns properly title-cased aliases by default as non-normalized', () => {
+        it('returns existing title-cased aliases by default as non-normalized', () => {
             const aliases = listAliases('song of solomon');
             expect(aliases[0]).toBe('Song of Solomon');
             expect(aliases).toContain('Canticle of Canticles');

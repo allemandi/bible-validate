@@ -1,5 +1,8 @@
-# dist
+# Output directories
 dist/
+build/
+lib/
+out/
 
 ### macOS ###
 # General
@@ -71,9 +74,6 @@ bower_components
 
 # node-waf configuration
 .lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directories
 node_modules/
@@ -208,3 +208,6 @@ $RECYCLE.BIN/
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+# IDE configs
+.vscode/
