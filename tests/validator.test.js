@@ -1,7 +1,6 @@
 import {
     isValidBook,
     isValidChapter,
-    isValidVerses,
     isValidReference
 } from '../src/utils/validator.js';
 
@@ -49,33 +48,6 @@ describe('Bible Reference Validator', () => {
             expect(isValidChapter(null, 1)).toBe(false);
             expect(isValidChapter('Genesis', null)).toBe(false);
             expect(isValidChapter(undefined, undefined)).toBe(false);
-        });
-    });
-
-    describe('isValidVerses()', () => {
-        it('validates single verse correctly', () => {
-            expect(isValidVerses('Genesis', 1, 1)).toBe(true);
-            expect(isValidVerses('Genesis', 1, 31)).toBe(true);  // last verse in Genesis 1
-            expect(isValidVerses('Genesis', 1, 32)).toBe(false); // invalid verse
-        });
-
-        it('validates verse ranges correctly', () => {
-            expect(isValidVerses('Genesis', 1, 1, 10)).toBe(true);
-            expect(isValidVerses('Genesis', 1, 1, 31)).toBe(true);
-            expect(isValidVerses('Genesis', 1, 10, 31)).toBe(true);
-            expect(isValidVerses('Genesis', 1, 10, 32)).toBe(false);
-            expect(isValidVerses('Genesis', 1, 10, 5)).toBe(false);
-        });
-
-        it('returns false for invalid chapters or books', () => {
-            expect(isValidVerses('Genesis', 0, 1)).toBe(false);
-            expect(isValidVerses('Judas', 1, 1)).toBe(false);
-        });
-
-        it('returns false for invalid verses', () => {
-            expect(isValidVerses('Genesis', 1, 0)).toBe(false);
-            expect(isValidVerses('Genesis', 1, -1)).toBe(false);
-            expect(isValidVerses('Genesis', 1, 1, 0)).toBe(false);
         });
     });
 

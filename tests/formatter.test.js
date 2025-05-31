@@ -61,14 +61,14 @@ describe('parseAndValidateReference()', () => {
         expect(result.error).toBe('Invalid chapter or verse');
     });
 
-    it('accepts valid single verse (Genesis 1:1)', () => {
-        const result = parseAndValidateReference('Genesis 1:1');
+    it('accepts valid single verse (Genesis Chapter 1 verse 1)', () => {
+        const result = parseAndValidateReference('Genesis Chapter 1 verse 1');
         expect(result.isValid).toBe(true);
         expect(result.formatted).toBe('Genesis 1:1');
     });
 
-    it('accepts verse range and formats correctly', () => {
-        const result = parseAndValidateReference('Genesis 1:1-3');
+    it('accepts verse range and formats correctly (  GN. Ch 1 , 1 to 3)', () => {
+        const result = parseAndValidateReference('  GN. Ch 1 , 1 to 3');
         expect(result.isValid).toBe(true);
         expect(result.formatted).toBe('Genesis 1:1-3');
     });

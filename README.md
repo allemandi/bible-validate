@@ -80,6 +80,18 @@ UMD (Browser)
 
 
 ## 📦 API
+### ℹ️ Input Normalization
+String inputs get minimal normalization and basic alias matching:
+- `"First KinGs"` → `"1 Kings"`
+- `"Gen chapter 12, verses 2:4"` → `"Genesis 12:2–4"`
+- `"Canticles"` → `"Song of Solomon"`
+- Case, punctuation, and ordinals normalized
+
+> ⚠️ Prefixes like "Book of", "The Gospel According to", and other fuzzy matching aren’t handled.
+
+Normalization details and examples are included in documentation.
+
+
 ### `formatReference({ book, chapter, verseStart, verseEnd })`
 
 - Formats a parsed Bible reference object into a human-readable string.
@@ -190,8 +202,8 @@ parseAndValidateReference('Genesis 1:1', { structured: true });
 //   original: 'Genesis 1:1'
 // }
 
-parseAndValidateReference('gEnEsIs 1:1');
-// => { isValid: true, formatted: 'Genesis 1:1', error: null, original: 'gEnEsIs 1:1' }
+parseAndValidateReference('  GN. Ch 1 , 1 to 3');
+// => { isValid: true, formatted: 'Genesis 1:1-3', error: null, original: '  GN. Ch 1 , 1 to 3' }
 ```
 
 ### `getBook(book)`

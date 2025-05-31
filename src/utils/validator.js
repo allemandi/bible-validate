@@ -13,11 +13,6 @@ function isValidChapter(book, chapter) {
     return chapter >= 1 && chapter <= bookObj.chapters.length;
 }
 
-function isValidVerses(book, chapter, verseStart, verseEnd = null) {
-    console.warn('[DEPRECATED] isValidVerses() is deprecated. Use isValidVerses() instead.');
-    return isValidReference(book, chapter, verseStart, verseEnd);
-}
-
 /**
  * Returns true if the given book, chapter, and verse is valid.
  */
@@ -35,6 +30,5 @@ function isValidReference(book, chapter, verseStart, verseEnd = null) {
 export {
     isValidBook,
     isValidChapter,
-    isValidVerses,
     isValidReference
 };
