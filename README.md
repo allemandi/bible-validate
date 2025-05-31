@@ -5,7 +5,7 @@
 
 > **Utilities for validating and parsing Bible references**
 > 
-> Supports ESM, CommonJS, and UMD – works in modern builds, Node.js, and browsers.
+> Supports ESM, CommonJS, UMD, and TypeScript – works in modern builds, Node.js, and browsers.
 
 
 <!-- omit from toc -->

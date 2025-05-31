@@ -8,18 +8,47 @@
 *   [parseChapterVerse][4]
     *   [Parameters][5]
     *   [Examples][6]
-*   [parseBibleReference][7]
+*   [extractBookAndRange][7]
     *   [Parameters][8]
     *   [Examples][9]
-*   [formatReference][10]
+*   [parseBibleReference][10]
     *   [Parameters][11]
     *   [Examples][12]
-*   [parseAndValidateReference][13]
+*   [isValidBook][13]
     *   [Parameters][14]
     *   [Examples][15]
-*   [getBook][16]
+*   [isValidChapter][16]
     *   [Parameters][17]
     *   [Examples][18]
+*   [isValidReference][19]
+    *   [Parameters][20]
+    *   [Examples][21]
+*   [formatReference][22]
+    *   [Parameters][23]
+    *   [Examples][24]
+*   [parseAndValidateReference][25]
+    *   [Parameters][26]
+    *   [Examples][27]
+*   [getBook][28]
+    *   [Parameters][29]
+    *   [Examples][30]
+*   [getChapterCount][31]
+    *   [Parameters][32]
+    *   [Examples][33]
+*   [getVerseCount][34]
+    *   [Parameters][35]
+    *   [Examples][36]
+*   [listBibleBooks][37]
+    *   [Examples][38]
+*   [listAliases][39]
+    *   [Parameters][40]
+    *   [Examples][41]
+*   [listChapters][42]
+    *   [Parameters][43]
+    *   [Examples][44]
+*   [listVerses][45]
+    *   [Parameters][46]
+    *   [Examples][47]
 
 ## normalizeBookName
 
@@ -28,31 +57,22 @@ converting ordinal prefixes to digits, and stripping non-alphanumeric characters
 
 ### Parameters
 
-*   `name` **[string][19]** The raw book name or alias to normalize, possibly with prefixes, punctuation, and mixed case.
+*   `name` **[string][48]** The raw book name or alias to normalize, possibly with prefixes, punctuation, and mixed case.
 
 ### Examples
 
 ```javascript
 // Converts ordinal prefix to digit and removes punctuation
 normalizeBookName('1st John'); // '1john'
-```
-
-```javascript
 // Removes unified prefixes and lowercases the name
 normalizeBookName('The Epistle to the Romans'); // 'romans'
-```
-
-```javascript
 // Strips non-alphanumeric characters and trims spaces
 normalizeBookName('  Book of *EX*  '); // 'ex'
-```
-
-```javascript
 // Returns null if input is null or undefined
 normalizeBookName(null); // null
 ```
 
-Returns **([string][19] | null)** A cleaned lowercase alphanumeric string with numeric prefixes for ordinals, or null if input is null or undefined.
+Returns **([string][48] | null)** A cleaned lowercase alphanumeric string with numeric prefixes for ordinals, or null if input is null or undefined.
 
 ## parseChapterVerse
 
@@ -61,43 +81,52 @@ into an object with numeric values.
 
 ### Parameters
 
-*   `str` **[string][19]** The string containing chapter and verse references, which may include words, punctuation, and ranges.
+*   `str` **[string][48]** The string containing chapter and verse references, which may include words, punctuation, and ranges.
 
 ### Examples
 
 ```javascript
 // Parses chapter only reference
 parseChapterVerse('12'); // { chapter: 12, verseStart: null, verseEnd: null }
-```
-
-```javascript
 // Parses chapter and single verse reference
 parseChapterVerse('5:3'); // { chapter: 5, verseStart: 3, verseEnd: null }
-```
-
-```javascript
 // Parses chapter with verse range including words and punctuation
 parseChapterVerse('Chapter 13 Verses 4–7'); // { chapter: 13, verseStart: 4, verseEnd: 7 }
-```
-
-```javascript
 // Parses chapter with verse range using "to" as a separator
 parseChapterVerse('chap. 13, v3 to 8'); // { chapter: 13, verseStart: 3, verseEnd: 8 }
-```
-
-```javascript
 // Returns null if no numeric chapter is present
 parseChapterVerse('nonsense'); // null
-```
-
-```javascript
 // Parses chapter and verse range with extra whitespace and punctuation
 parseChapterVerse('  10 : 2  - 6 '); // { chapter: 10, verseStart: 2, verseEnd: 6 }
-```
-
-```javascript
 // Handles pure whitespace and number combination
 parseChapterVerse('  11  1   2 '); // { chapter: 11, verseStart: 1, verseEnd: 2 }
+```
+
+## extractBookAndRange
+
+Splits a Bible reference string into the book name and chapter/verse range parts,
+trimming empty space. No further normalization.
+
+### Parameters
+
+*   `ref` **[string][48]** The Bible reference string containing a book name optionally followed by a chapter/verse range.
+
+### Examples
+
+```javascript
+// Extracts book and range from a standard reference
+extractBookAndRange('1st John 3:16'); // ['1st John', '3:16']
+// Extracts book name with punctuation and range
+extractBookAndRange("The Revelation 4:5"); // ["The Revelation", '4:5']
+// Returns book name with empty range when no range is given
+extractBookAndRange('Genesis'); // ['Genesis', '']
+// Returns [null, null] for empty or invalid input
+extractBookAndRange(''); // [null, null]
+// Handles leading spaces and complex ranges with simple chapter abbreviations
+extractBookAndRange(' Exodus   12. 1 to 3'); // ['Exodus', '12. 1 to 3']
+extractBookAndRange('Exodus Chapter 12:1-3'); // ['Exodus', 'Chapter 12:1-3']
+extractBookAndRange(' Exodus  Ch. 12. 1 to 3'); // ['Exodus', 'Ch. 12. 1 to 3']
+extractBookAndRange('second Kings Chape 1 to 3'); // ['second Kings Chape', '1 to 3']
 ```
 
 ## parseBibleReference
@@ -106,7 +135,7 @@ Parses a Bible reference string into its book, chapter, and verse components, su
 
 ### Parameters
 
-*   `ref` **[string][19]** The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
+*   `ref` **[string][48]** The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
 
 ### Examples
 
@@ -114,37 +143,109 @@ Parses a Bible reference string into its book, chapter, and verse components, su
 // Parses ordinal prefix and returns structured reference
 parseBibleReference('2nd Kings 4:2'); 
 // { book: '2kings', chapter: 4, verseStart: 2, verseEnd: null }
-```
-
-```javascript
 // Handles mixed casing, chapter/verse labels, and verse range
 parseBibleReference(' Iii JohN  Chap. 1 verses 9 to  11'); 
 // { book: '3john', chapter: 1, verseStart: 9, verseEnd: 11 }
-```
-
-```javascript
 // Returns null fields when chapter and verse are omitted
 parseBibleReference('Genesis'); 
 // { book: 'genesis', chapter: null, verseStart: null, verseEnd: null }
-```
-
-```javascript
 // Cleans and parses input with excessive spacing
 parseBibleReference('  1st   Samuel    17 : 4-9 '); 
 // { book: '1samuel', chapter: 17, verseStart: 4, verseEnd: 9 }
-```
-
-```javascript
 // Returns null for invalid or non-string input
 parseBibleReference('!!!'); 
 // { book: null, chapter: null, verseStart: null, verseEnd: null }
-```
-
-```javascript
 parseBibleReference(42); // null
 ```
 
 Returns **(ParsedReference | null)** An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
+
+## isValidBook
+
+Checks if a given book name or alias corresponds to a valid Bible book.
+
+### Parameters
+
+*   `book` **([string][48] | null | [undefined][49])** The name or alias of the book to lookup, which will be normalized internally.
+
+### Examples
+
+```javascript
+// Valid full book name returns true
+isValidBook('Genesis'); // true
+// Valid alias, case-insensitive, returns true
+isValidBook('gEn'); // true
+// Unknown book returns false
+isValidBook('Judas'); // false
+// Empty string returns false
+isValidBook(''); // false
+// Null or undefined input returns false
+isValidBook(null); // false
+isValidBook(undefined); // false
+```
+
+Returns **[boolean][50]** True if the book exists in the Bible collection, false otherwise.
+
+## isValidChapter
+
+Checks if the given chapter number is valid for the specified Bible book.
+
+### Parameters
+
+*   `book` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+*   `chapter` **[number][51]** The chapter number to check, expected to be a positive integer.
+
+### Examples
+
+```javascript
+// Valid chapters for Genesis include 1 and 50
+isValidChapter('Genesis', 1);  // true
+isValidChapter('Genesis', 50); // true
+// Invalid chapters are below 1 or above the book's chapter count
+isValidChapter('Genesis', 0);  // false
+isValidChapter('Genesis', 51); // false
+isValidChapter('Genesis', -1); // false
+// Returns false if the book is unknown or input is null/undefined
+isValidChapter('Judas', 1);    // false
+isValidChapter(null, 1);       // false
+isValidChapter('Genesis', null); // false
+```
+
+Returns **[boolean][50]** True if the chapter is within the valid range for the book; otherwise, false.
+
+## isValidReference
+
+Validates whether a given Bible reference consisting of book, chapter, and verse(s) is valid.
+
+### Parameters
+
+*   `book` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+*   `chapter` **[number][51]** The chapter number, must be a positive integer within the book's chapter count.
+*   `verseStart` **[number][51]** The starting verse number, must be a positive integer within the chapter's verse count.
+*   `verseEnd` **([number][51] | null)** Optional ending verse number, must be greater than or equal to verseStart and within the chapter's verse count if provided. (optional, default `null`)
+
+### Examples
+
+```javascript
+// Valid single verse in Genesis chapter 1
+isValidReference('Genesis', 1, 1); // true
+// Valid last verse in Genesis chapter 1
+isValidReference('Genesis', 1, 31); // true
+// Invalid verse number exceeding the number of verses in chapter 1 of Genesis
+isValidReference('Genesis', 1, 32); // false
+// Invalid chapter number (0) in Genesis
+isValidReference('Genesis', 0, 1); // false
+// Invalid verse number (0) in Genesis chapter 1
+isValidReference('Genesis', 1, 0); // false
+// Invalid unknown book name returns false
+isValidReference('Blah', 1, 1); // false
+// Reference with a verse range, valid only if verseEnd >= verseStart and within chapter verse count
+isValidReference('Genesis', 1, 1, 5); // true
+// Case-insensitive book name input is accepted
+isValidReference('gEnEsIs', 1, 1); // true
+```
+
+Returns **[boolean][50]** True if the reference is valid within the book's chapter and verse bounds, otherwise false.
 
 ## formatReference
 
@@ -152,12 +253,12 @@ Formats a scripture reference string based on the provided input. Input is not n
 
 ### Parameters
 
-*   `reference` **[Object][20]** The reference object.
+*   `reference` **[Object][52]** The reference object.
 
-    *   `reference.book` **[string][19]** The name of the book (e.g., "Genesis").
-    *   `reference.chapter` **[number][21]?** The chapter number.
-    *   `reference.verseStart` **[number][21]?** The starting verse number.
-    *   `reference.verseEnd` **([number][21] | null)?** The ending verse number (optional, used for ranges).
+    *   `reference.book` **[string][48]** The name of the book (e.g., "Genesis").
+    *   `reference.chapter` **[number][51]?** The chapter number.
+    *   `reference.verseStart` **[number][51]?** The starting verse number.
+    *   `reference.verseEnd` **([number][51] | null)?** The ending verse number (optional, used for ranges).
 
 ### Examples
 
@@ -170,7 +271,7 @@ formatReference({ book: 'Genesis', chapter: 1, verseStart: 1, verseEnd: 5 }); //
 formatReference({ book: 'Genesis', chapter: 1, verseStart: 3, verseEnd: 3 }); // 'Genesis 1:3'
 ```
 
-Returns **[string][19]** A formatted Bible reference (e.g., "Genesis 1:1-5"). Returns an empty string if no input is provided.
+Returns **[string][48]** A formatted Bible reference (e.g., "Genesis 1:1-5"). Returns an empty string if no input is provided.
 
 ## parseAndValidateReference
 
@@ -178,8 +279,8 @@ Parses and validates a Bible reference string.
 
 ### Parameters
 
-*   `reference` **[string][19]** The raw Bible reference string to be parsed, normalized, and formatted (e.g., "Genesis 1:1", "Letter to the Romans. Ch 2 , 1 to 3").
-*   `$1` **[Object][20]**  (optional, default `{}`)
+*   `reference` **[string][48]** The raw Bible reference string to be parsed, normalized, and formatted (e.g., "Genesis 1:1", "Letter to the Romans. Ch 2 , 1 to 3").
+*   `$1` **[Object][52]**  (optional, default `{}`)
 
     *   `$1.structured`   (optional, default `false`)
 
@@ -211,7 +312,7 @@ Retrieves a book object from the Bible collection matching the given book name o
 
 ### Parameters
 
-*   `book` **[string][19]** The name or alias of the book to lookup, which will be normalized internally.
+*   `book` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
 
 ### Examples
 
@@ -226,6 +327,137 @@ getBook('Judas'); // null
 
 Returns **(BibleBook | null)** The matched book object containing book name, aliases, and chapters, or null if no match is found.
 
+## getChapterCount
+
+Returns the number of chapters for a given Bible book name or alias, or null if the book is not found.
+
+### Parameters
+
+*   `name` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+
+### Examples
+
+```javascript
+// Returns 50 chapters for Genesis
+getChapterCount('Genesis'); // 50
+// Returns null for an unknown or invalid book name
+getChapterCount('Judas');
+```
+
+Returns **([number][51] | null)** The total number of chapters in the matched book, or null if no book is found.
+
+## getVerseCount
+
+Returns the number of verses in a specified chapter of a given Bible book, or null if the book or chapter is invalid.
+
+### Parameters
+
+*   `name` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+*   `chapter` **[number][51]** The chapter number to retrieve the verse count for; must be within valid range.
+
+### Examples
+
+```javascript
+// Returns 25, the number of verses in Genesis chapter 2
+getVerseCount('GeN.  ', 2); // 25
+// Returns null for an invalid book name
+getVerseCount('Judas', 1);
+// Returns null for a chapter number that is too high
+getVerseCount('Genesis', 999);
+// Returns null for a chapter number less than 1
+getVerseCount('Genesis', 0);
+```
+
+Returns **([number][51] | null)** The count of verses in the specified chapter, or null if the book is unknown or chapter is out of bounds.
+
+## listBibleBooks
+
+Returns an array of all Bible book names in their canonical order.
+
+### Examples
+
+```javascript
+// Returns an array of 66 Bible books
+listBibleBooks();
+// The first and last elements are Genesis and Revelation respectively
+const books = listBibleBooks();
+console.log(books[0]); // "Genesis"
+console.log(books[books.length - 1]); // "Revelation"
+```
+
+Returns **[Array][53]<[string][48]>** An array containing 66 book names starting with Genesis and ending with Revelation.
+
+## listAliases
+
+Returns all aliases for a given book name, including the official book title, optionally normalized.
+
+### Parameters
+
+*   `bookName` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+*   `options` **[Object][52]?** Optional settings. (optional, default `{}`)
+
+    *   `options.normalized` **[boolean][50]** If true, returns all aliases normalized (lowercased and stripped of special characters). (optional, default `false`)
+
+### Examples
+
+```javascript
+// Returns non-normalized aliases for "Second Corinthians"
+listAliases('Second Corinthians');
+// Expected output: ["2 Corinthians", "2 Co", ...other aliases]
+// Returns normalized aliases for "Song" with normalization enabled
+listAliases('Song', { normalized: true });
+// Expected output: ["songofsolomon", "canticleofcanticles", "sos", ...]
+// Returns null for unrecognized or empty book names
+listAliases('UnknownBook'); // null
+listAliases(null);          // null
+listAliases('');            // null
+```
+
+Returns **([Array][53]<[string][48]> | null)** An array of aliases including the official book name, either normalized or in original form, or null if no matching book is found.
+
+## listChapters
+
+Returns an array of chapter numbers for a given Bible book, starting from 1 up to the total chapter count.
+
+### Parameters
+
+*   `bookName` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+
+### Examples
+
+```javascript
+// Returns an array [1, 2, ..., 40] for Exodus, which has 40 chapters
+listChapters('Exodus'); // [1, 2, 3, ..., 40]
+// Returns null for an invalid or unknown book
+listChapters('UnknownBook'); // null
+```
+
+Returns **([Array][53]<[number][51]> | null)** An array of chapter numbers from 1 to the book's chapter count, or null if the book is invalid or not found.
+
+## listVerses
+
+Lists all verse numbers for a given book and chapter as a sequential array starting from 1.
+
+### Parameters
+
+*   `bookName` **[string][48]** The name or alias of the book to lookup, which will be normalized internally.
+*   `chapter` **[number][51]** The chapter number within the book.
+
+### Examples
+
+```javascript
+// Returns an array of verses [1, 2, ..., 31] for Genesis chapter 1
+listVerses('Genesis', 1); // [1, 2, 3, ..., 31]
+// Returns null for a missing chapter parameter
+listVerses('Genesis'); // null
+// Returns null for an invalid chapter number or unknown book
+listVerses('Genesis', 0); // null
+listVerses('Genesis', 999); // null
+listVerses('UnknownBook', 1); // null
+```
+
+Returns **([Array][53]<[number][51]> | null)** An array of verse numbers from 1 up to the chapter's verse count, or null if the book or chapter is invalid or out of range.
+
 [1]: #normalizebookname
 
 [2]: #parameters
@@ -238,32 +470,96 @@ Returns **(BibleBook | null)** The matched book object containing book name, ali
 
 [6]: #examples-1
 
-[7]: #parsebiblereference
+[7]: #extractbookandrange
 
 [8]: #parameters-2
 
 [9]: #examples-2
 
-[10]: #formatreference
+[10]: #parsebiblereference
 
 [11]: #parameters-3
 
 [12]: #examples-3
 
-[13]: #parseandvalidatereference
+[13]: #isvalidbook
 
 [14]: #parameters-4
 
 [15]: #examples-4
 
-[16]: #getbook
+[16]: #isvalidchapter
 
 [17]: #parameters-5
 
 [18]: #examples-5
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[19]: #isvalidreference
 
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[20]: #parameters-6
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[21]: #examples-6
+
+[22]: #formatreference
+
+[23]: #parameters-7
+
+[24]: #examples-7
+
+[25]: #parseandvalidatereference
+
+[26]: #parameters-8
+
+[27]: #examples-8
+
+[28]: #getbook
+
+[29]: #parameters-9
+
+[30]: #examples-9
+
+[31]: #getchaptercount
+
+[32]: #parameters-10
+
+[33]: #examples-10
+
+[34]: #getversecount
+
+[35]: #parameters-11
+
+[36]: #examples-11
+
+[37]: #listbiblebooks
+
+[38]: #examples-12
+
+[39]: #listaliases
+
+[40]: #parameters-12
+
+[41]: #examples-13
+
+[42]: #listchapters
+
+[43]: #parameters-13
+
+[44]: #examples-14
+
+[45]: #listverses
+
+[46]: #parameters-14
+
+[47]: #examples-15
+
+[48]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[49]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[50]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[51]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[52]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[53]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
