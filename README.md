@@ -14,6 +14,7 @@
 - [🛠️ Installation](#️-installation)
 - [🚀 Quick Usage Examples](#-quick-usage-examples)
 - [📦 API](#-api)
+- [Deprecated](#deprecated)
 - [🧪 Tests](#-tests)
 - [🤝 Contributing](#-contributing)
 
@@ -423,29 +424,6 @@ isValidChapter(null, 1);        // false
 isValidChapter('Genesis', null); // false
 ```
 
-### isValidVerses(book, chapter, verseStart, verseEnd = null)
-- Validates if a verse or verse range is valid within the specified book and chapter.
-
-#### Parameters
-- book (string|null|undefined): Book name or alias.
-- chapter (number|null|undefined): Chapter number.
-- verseStart (number|null|undefined): Starting verse number.
-- verseEnd (number|null|undefined, optional): Ending verse number (for ranges). Defaults to null.
-
-#### Returns
-- boolean: true if the verse or verse range is valid, false otherwise.
-
-#### Examples
-```js
-isValidVerses('Genesis', 1, 1);        // true (valid single verse)
-isValidVerses('Genesis', 1, 31);       // true (last verse in chapter 1)
-isValidVerses('Genesis', 1, 32);       // false (verse too high)
-isValidVerses('Genesis', 1, 1, 10);    // true (valid range)
-isValidVerses('Genesis', 1, 10, 5);    // false (end < start)
-isValidVerses('Judas', 1, 1);          // false (invalid book)
-isValidVerses('Genesis', 0, 1);        // false (invalid chapter)
-```
-
 ### `isValidReference(book, chapter, verseStart, verseEnd = null)`
 - Checks if the full reference (book, chapter, verse/range) is valid.
 
@@ -551,6 +529,10 @@ listVerses('gen', 100);
 listVerses('UnknownBook', 1);
 // => null
 ```
+
+## Deprecated
+
+- `isValidVerses(book, chapter, verseStart, verseEnd?)` → Use `isValidReference(...)` instead.
 
 Examples
 ## 🧪 Tests

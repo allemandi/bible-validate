@@ -14,6 +14,14 @@ function isValidChapter(book, chapter) {
 }
 
 function isValidVerses(book, chapter, verseStart, verseEnd = null) {
+    console.warn('[DEPRECATED] isValidVerses() is deprecated. Use isValidVerses() instead.');
+    return isValidReference(book, chapter, verseStart, verseEnd);
+}
+
+/**
+ * Returns true if the given book, chapter, and verse is valid.
+ */
+function isValidReference(book, chapter, verseStart, verseEnd = null) {
     const bookObj = getBook(book);
     if (!bookObj || !isValidChapter(book, chapter)) return false;
     const maxVerses = bookObj.chapters[chapter - 1];
@@ -22,19 +30,6 @@ function isValidVerses(book, chapter, verseStart, verseEnd = null) {
         if (verseEnd < verseStart || verseEnd > maxVerses) return false;
     }
     return true;
-}
-
-/**
- * Returns true if the given book, chapter, and verse is valid.
- */
-function isValidReference(book, chapter, verseStart, verseEnd = null) {
-    const bookObj = getBook(book);
-    if (!bookObj) return false;
-
-    return (
-        isValidChapter(book, chapter) &&
-        isValidVerses(book, chapter, verseStart, verseEnd)
-    );
 }
 
 export {
