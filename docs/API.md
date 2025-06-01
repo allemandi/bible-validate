@@ -2,16 +2,16 @@
 
 ### Table of Contents
 
-*   [normalizeBookName][1]
+*   [parseBibleReference][1]
     *   [Parameters][2]
     *   [Examples][3]
-*   [parseChapterVerse][4]
+*   [normalizeBookName][4]
     *   [Parameters][5]
     *   [Examples][6]
-*   [extractBookAndRange][7]
+*   [parseChapterVerse][7]
     *   [Parameters][8]
     *   [Examples][9]
-*   [parseBibleReference][10]
+*   [extractBookAndRange][10]
     *   [Parameters][11]
     *   [Examples][12]
 *   [isValidBook][13]
@@ -49,6 +49,37 @@
 *   [listVerses][45]
     *   [Parameters][46]
     *   [Examples][47]
+
+## parseBibleReference
+
+Parses a Bible reference string into its book, chapter, and verse components, supporting various formats and spacing.
+
+### Parameters
+
+*   `ref` **[string][48]** The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
+
+### Examples
+
+```javascript
+// Parses ordinal prefix and returns structured reference
+parseBibleReference('2nd Kings 4:2'); 
+// { book: '2kings', chapter: 4, verseStart: 2, verseEnd: null }
+// Handles mixed casing, chapter/verse labels, and verse range
+parseBibleReference(' Iii JohN  Chap. 1 verses 9 to  11'); 
+// { book: '3john', chapter: 1, verseStart: 9, verseEnd: 11 }
+// Returns null fields when chapter and verse are omitted
+parseBibleReference('Genesis'); 
+// { book: 'genesis', chapter: null, verseStart: null, verseEnd: null }
+// Cleans and parses input with excessive spacing
+parseBibleReference('  1st   Samuel    17 : 4-9 '); 
+// { book: '1samuel', chapter: 17, verseStart: 4, verseEnd: 9 }
+// Returns null for invalid or non-string input
+parseBibleReference('!!!'); 
+// { book: null, chapter: null, verseStart: null, verseEnd: null }
+parseBibleReference(42); // null
+```
+
+Returns **(ParsedReference | null)** An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
 
 ## normalizeBookName
 
@@ -128,37 +159,6 @@ extractBookAndRange('Exodus Chapter 12:1-3'); // ['Exodus', 'Chapter 12:1-3']
 extractBookAndRange(' Exodus  Ch. 12. 1 to 3'); // ['Exodus', 'Ch. 12. 1 to 3']
 extractBookAndRange('second Kings Chape 1 to 3'); // ['second Kings Chape', '1 to 3']
 ```
-
-## parseBibleReference
-
-Parses a Bible reference string into its book, chapter, and verse components, supporting various formats and spacing.
-
-### Parameters
-
-*   `ref` **[string][48]** The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
-
-### Examples
-
-```javascript
-// Parses ordinal prefix and returns structured reference
-parseBibleReference('2nd Kings 4:2'); 
-// { book: '2kings', chapter: 4, verseStart: 2, verseEnd: null }
-// Handles mixed casing, chapter/verse labels, and verse range
-parseBibleReference(' Iii JohN  Chap. 1 verses 9 to  11'); 
-// { book: '3john', chapter: 1, verseStart: 9, verseEnd: 11 }
-// Returns null fields when chapter and verse are omitted
-parseBibleReference('Genesis'); 
-// { book: 'genesis', chapter: null, verseStart: null, verseEnd: null }
-// Cleans and parses input with excessive spacing
-parseBibleReference('  1st   Samuel    17 : 4-9 '); 
-// { book: '1samuel', chapter: 17, verseStart: 4, verseEnd: 9 }
-// Returns null for invalid or non-string input
-parseBibleReference('!!!'); 
-// { book: null, chapter: null, verseStart: null, verseEnd: null }
-parseBibleReference(42); // null
-```
-
-Returns **(ParsedReference | null)** An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
 
 ## isValidBook
 
@@ -280,9 +280,9 @@ Parses and validates a Bible reference string.
 ### Parameters
 
 *   `reference` **[string][48]** The raw Bible reference string to be parsed, normalized, and formatted (e.g., "Genesis 1:1", "Letter to the Romans. Ch 2 , 1 to 3").
-*   `$1` **[Object][52]**  (optional, default `{}`)
+*   `options` **ParseReferenceOptions?** Optional configuration, return structured object or just the formatted result. (optional, default `{}`)
 
-    *   `$1.structured`   (optional, default `false`)
+    *   `options.structured`   (optional, default `false`)
 
 ### Examples
 
@@ -458,25 +458,25 @@ listVerses('UnknownBook', 1); // null
 
 Returns **([Array][53]<[number][51]> | null)** An array of verse numbers from 1 up to the chapter's verse count, or null if the book or chapter is invalid or out of range.
 
-[1]: #normalizebookname
+[1]: #parsebiblereference
 
 [2]: #parameters
 
 [3]: #examples
 
-[4]: #parsechapterverse
+[4]: #normalizebookname
 
 [5]: #parameters-1
 
 [6]: #examples-1
 
-[7]: #extractbookandrange
+[7]: #parsechapterverse
 
 [8]: #parameters-2
 
 [9]: #examples-2
 
-[10]: #parsebiblereference
+[10]: #extractbookandrange
 
 [11]: #parameters-3
 

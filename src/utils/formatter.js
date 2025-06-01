@@ -1,7 +1,9 @@
+/**
+ * @import { ParseReferenceOptions, ParsedReference, SimpleResult, StructuredResult } from './types.js'
+ */
 import { parseBibleReference } from './normalizer.js';
 import { getBook } from './lookup.js';
 import { isValidReference } from './validator.js';
-
 
 /**
  * Formats a scripture reference string based on the provided input. Input is not normalized.
@@ -22,10 +24,8 @@ import { isValidReference } from './validator.js';
  */
 function formatReference({ book, chapter, verseStart, verseEnd }) {
     if (!book || !chapter) return book || '';
-
     if (verseStart == null) return `${book} ${chapter}`;
     if (verseEnd == null || verseEnd === verseStart) return `${book} ${chapter}:${verseStart}`;
-
     return `${book} ${chapter}:${verseStart}-${verseEnd}`;
 }
 
@@ -33,7 +33,7 @@ function formatReference({ book, chapter, verseStart, verseEnd }) {
  * Parses and validates a Bible reference string.
  * @public
  * @param {string} reference - The raw Bible reference string to be parsed, normalized, and formatted (e.g., "Genesis 1:1", "Letter to the Romans. Ch 2 , 1 to 3").
- * @param {{ structured?: boolean }} [options] - Optional configuration, return structured object or just the formatted result.
+ * @param {ParseReferenceOptions} [options] - Optional configuration, return structured object or just the formatted result.
  * @returns {SimpleResult|StructuredResult} - Result object depending on options.structured.
  * @example
  * parseAndValidateReference('  GN. Ch 1 , 1 to 3');
@@ -64,38 +64,30 @@ function parseAndValidateReference(reference, { structured = false } = {}) {
         return fail('Empty or invalid input');
     }
 
-    /** 
+    /**
      * @private
-     * @import { ParsedReference } from './types.js'
      * @type {ParsedReference|null}
      */
     const parsed = parseBibleReference(reference);
     if (!parsed?.book) return fail('Could not parse reference');
-
     const bookObj = getBook(parsed.book);
     if (!bookObj) return fail('Invalid book name');
-
     const chapter = parsed.chapter ?? null;
     const verseStart = parsed.verseStart ?? null;
     const verseEnd = parsed.verseEnd ?? null;
-
     if (chapter === null || verseStart === null) {
         return fail('Missing chapter or verse');
     }
-
     if (!isValidReference(bookObj.book, chapter, verseStart, verseEnd)) {
         return fail('Invalid chapter or verse');
     }
-
     const formatted = formatReference({ book: bookObj.book, chapter, verseStart, verseEnd });
-
     const base = {
         isValid: true,
         formatted,
         error: null,
         original: reference,
     };
-
     return structured
         ? {
             ...base,
@@ -111,25 +103,3 @@ export {
     parseAndValidateReference,
     formatReference,
 }
-
-// --- JSDoc Type Definitions ---
-/**
- * @private
- * @typedef {Object} SimpleResult
- * @property {boolean} isValid
- * @property {string|null} error
- * @property {string} original
- * @property {string} [formatted]
- *
- * @typedef {Object} StructuredResult
- * @property {boolean} isValid
- * @property {string} book
- * @property {number} chapter
- * @property {number|null} verseStart
- * @property {number|null} verseEnd
- * @property {string|null} error
- * @property {string} original
- * @property {string} [formatted]
- *
- */
-

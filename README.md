@@ -7,7 +7,6 @@
 > 
 > Supports ESM, CommonJS, UMD, and TypeScript – works in modern builds, Node.js, and browsers.
 
-
 <!-- omit from toc -->
 ## 🔖 Table of Contents
 - [✨ Features](#-features)
@@ -49,7 +48,6 @@ import {
 const ref = 'GeN Chapter 3:  16 to 18';
 const result = parseAndValidateReference(ref, {structured: true})
 console.log(result);
-
 //  {
 //     isValid: true,
 //     book: 'Genesis',

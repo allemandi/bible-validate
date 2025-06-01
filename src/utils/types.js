@@ -13,4 +13,29 @@
  * @property {number|null} verseEnd - The ending verse number (for ranges)
  */
 
+/**
+ * @typedef {Object} ParseReferenceOptions
+ * @property {boolean} [structured=false] - Whether to return structured result.
+ */
+
+/**
+ * @typedef {Object} SimpleResult
+ * @property {boolean} isValid
+ * @property {string|null} error
+ * @property {string} original
+ * @property {string} [formatted]
+ */
+
+/**
+ * @typedef {Object} StructuredResult
+ * @property {boolean} isValid
+ * @property {string} book
+ * @property {number} chapter
+ * @property {number|null} verseStart
+ * @property {number|null} verseEnd
+ * @property {string|null} error
+ * @property {string} original
+ * @property {string} [formatted]
+*/
+
 export {};

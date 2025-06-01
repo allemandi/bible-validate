@@ -1,5 +1,3 @@
-
-
 /**
  * Normalizes a Bible book name or alias by trimming spaces, removing common prefixes, 
  * converting ordinal prefixes to digits, and stripping non-alphanumeric characters.
@@ -75,9 +73,7 @@ function parseChapterVerse(str) {
 
     const tokens = cleaned.split(/[\s\-:]+/).filter(Boolean);
     const nums = tokens.map(t => parseInt(t, 10)).filter(n => !isNaN(n));
-
     if (nums.length === 0) return null;
-
     switch (nums.length) {
         case 1:
             return { chapter: nums[0], verseStart: null, verseEnd: null };
@@ -87,6 +83,7 @@ function parseChapterVerse(str) {
             return { chapter: nums[0], verseStart: nums[1], verseEnd: nums[2] };
     }
 }
+
 /**
  * Splits a Bible reference string into the book name and chapter/verse range parts,
  * trimming empty space. No further normalization.
@@ -110,12 +107,9 @@ function parseChapterVerse(str) {
  */
 function extractBookAndRange(ref) {
     if (!ref || typeof ref !== 'string') return [null, null];
-
     const cleaned = ref.trim().replace(/\s+/g, ' ');
-
     const pattern = /^([\d\w\s.']+?)\s*(?=\b(ch(?:apter)?|chap\.?)\b|\d)/i;
     const match = cleaned.match(pattern);
-
     if (match) {
         const book = match[1].trim();
         const range = cleaned.slice(match[0].length).trim();
@@ -123,7 +117,6 @@ function extractBookAndRange(ref) {
     }
     return [cleaned, ''];
 }
-
 
 /**
  * @import { ParsedReference } from './types.js'
@@ -133,7 +126,7 @@ function extractBookAndRange(ref) {
  * Parses a Bible reference string into its book, chapter, and verse components, supporting various formats and spacing.
  * @public
  * @param { string } ref - The Bible reference string to parse, which may include ordinal prefixes, varying case, punctuation, and verse ranges.
- * @returns {ParsedReference|null}- An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
+ * @returns {ParsedReference|null} - An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
  * @example
  * // Parses ordinal prefix and returns structured reference
  * parseBibleReference('2nd Kings 4:2'); 
@@ -154,12 +147,9 @@ function extractBookAndRange(ref) {
  */
 function parseBibleReference(ref) {
     if (!ref || typeof ref !== 'string') return null;
-
     const cleanedRef = ref.trim().replace(/\s+/g, ' ');
     const [bookRaw, chapterVerseRaw] = extractBookAndRange(cleanedRef);
-
     const book = bookRaw && normalizeBookName(bookRaw);
-
     if (!book) {
         return {
             book: null,
@@ -168,7 +158,6 @@ function parseBibleReference(ref) {
             verseEnd: null,
         };
     };
-
     const chapVerse = chapterVerseRaw ? parseChapterVerse(chapterVerseRaw) : null;
     return {
         book,
@@ -177,7 +166,6 @@ function parseBibleReference(ref) {
         verseEnd: chapVerse?.verseEnd ?? null,
     };
 }
-
 
 export {
     normalizeBookName,
