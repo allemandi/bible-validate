@@ -1,7 +1,7 @@
 {
     "name": "@allemandi/bible-validate",
-    "version": "2.2.2",
-    "description": "Utilities for validating and parsing Bible references",
+    "version": "2.2.3",
+    "description": "Fast, type-safe utilities for parsing, validating, and normalizing Bible references.",
     "main": "dist/index.cjs",
     "module": "dist/index.module.js",
     "types": "dist/index.d.ts",
