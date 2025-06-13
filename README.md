@@ -3,9 +3,10 @@
 [![NPM Version](https://img.shields.io/npm/v/@allemandi/bible-validate)](https://www.npmjs.com/package/@allemandi/bible-validate)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/allemandi/bible-validate/blob/main/LICENSE)
 
-> **Utilities for validating and parsing Bible references**
+> **Fast, type-safe utilities for parsing, validating, and normalizing Bible references.**
 > 
-> Supports ESM, CommonJS, UMD, and TypeScript – works in modern builds, Node.js, and browsers.
+> Works in Node.js, browsers – supports ESM, CommonJS, UMD, and TypeScript.
+> 
 
 <!-- omit from toc -->
 ## 🔖 Table of Contents
