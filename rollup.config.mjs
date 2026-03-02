@@ -29,7 +29,7 @@ const plugins = [
 ];
 
 export default [
-  // ESM + CJS (like microbundle's module/main)
+  // ESM + CJS
   {
     input: 'src/index.js',
     external: makeExternal([...deps, ...peerDeps]),
@@ -51,7 +51,7 @@ export default [
     ],
   },
 
-  // UMD (like microbundle's --name + unpkg)
+  // UMD
   {
     input: 'src/index.js',
     external: makeExternal(peerDeps),
