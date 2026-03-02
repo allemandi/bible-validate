@@ -3,7 +3,6 @@ import { createRequire } from 'node:module';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
 
 const require = createRequire(import.meta.url);
 /** @type {import('./package.json')} */
@@ -56,14 +55,7 @@ export default [
   {
     input: 'src/index.js',
     external: makeExternal(peerDeps),
-    plugins: [
-      ...plugins,
-      terser({
-        compress: { passes: 2, pure_getters: true },
-        mangle: true,
-        format: { comments: false },
-      }),
-    ],
+    plugins,
     output: {
       file: pkg.unpkg,
       format: 'umd',
