@@ -46,7 +46,7 @@
         "test": "yarn run test:jest && yarn run test:types",
         "lint": "eslint .",
         "docs": "documentation build src/*.js -f md -o ./docs/API.md --access public --sort-order kind",
-        "build:js": "microbundle --name bibleValidate",
+        "build:js": "rollup -c",
         "build:types": "tsc --project tsconfig.json",
         "build": "yarn run build:js && yarn run build:types"
     },
@@ -55,11 +55,14 @@
     "license": "MIT",
     "devDependencies": {
         "@eslint/js": "^9.39.1",
+        "@rollup/plugin-commonjs": "^29.0.0",
+        "@rollup/plugin-json": "^6.1.0",
+        "@rollup/plugin-node-resolve": "^16.0.3",
         "documentation": "^14.0.3",
         "eslint": "^9.39.1",
         "globals": "^16.5.0",
         "jest": "^30.2.0",
-        "microbundle": "^0.15.1",
+        "rollup": "^4.59.0",
         "typescript": "^5.9.3"
     }
 }
