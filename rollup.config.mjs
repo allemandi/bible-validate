@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 
 const require = createRequire(import.meta.url);
 /** @type {import('./package.json')} */
@@ -38,12 +39,14 @@ export default [
       {
         file: pkg.module,
         format: 'es',
+        compact: true,
         sourcemap: true,
       },
       {
         file: pkg.main,
         format: 'cjs',
         exports: 'named',
+        compact: true,
         sourcemap: true,
       },
     ],
@@ -53,12 +56,20 @@ export default [
   {
     input: 'src/index.js',
     external: makeExternal(peerDeps),
-    plugins,
+    plugins: [
+      ...plugins,
+      terser({
+        compress: { passes: 2, pure_getters: true },
+        mangle: true,
+        format: { comments: false },
+      }),
+    ],
     output: {
       file: pkg.unpkg,
       format: 'umd',
       name: 'bibleValidate',
       exports: 'named',
+      compact: true,
       sourcemap: true,
       globals: Object.fromEntries(peerDeps.map((d) => [d, d])),
     },
