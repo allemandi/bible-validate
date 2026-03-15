@@ -1,4 +1,9 @@
-import { normalizeBookName, parseChapterVerse, extractBookAndRange, parseBibleReference } from '../src/utils/normalizer';
+import {
+    normalizeBookName,
+    parseChapterVerse,
+    extractBookAndRange,
+    parseBibleReference,
+} from '../src/utils/normalizer';
 
 describe('normalizeBookName()', () => {
     it('normalizes case insensitive ordinal prefixes', () => {
@@ -14,7 +19,7 @@ describe('normalizeBookName()', () => {
         expect(normalizeBookName('The Gospel of Luke')).toBe('luke');
     });
     it('removes non-alphanumeric characters', () => {
-        expect(normalizeBookName("1st! Samuel?")).toBe("1samuel");
+        expect(normalizeBookName('1st! Samuel?')).toBe('1samuel');
         expect(normalizeBookName('Book of *EX*')).toBe('ex');
     });
     it('trims leading and trailing spaces', () => {
@@ -89,7 +94,7 @@ describe('extractBookAndRange()', () => {
         expect(extractBookAndRange('1st John 3:16')).toEqual(['1st John', '3:16']);
     });
     it('extracts with punctuation in book name', () => {
-        expect(extractBookAndRange("The Revelation 4:5")).toEqual(["The Revelation", '4:5']);
+        expect(extractBookAndRange('The Revelation 4:5')).toEqual(['The Revelation', '4:5']);
     });
     it('extracts when no range is given', () => {
         expect(extractBookAndRange('Genesis')).toEqual(['Genesis', '']);
@@ -105,9 +110,18 @@ describe('extractBookAndRange()', () => {
     });
     it('extracts range from chapter string or abbreviations', () => {
         expect(extractBookAndRange('Exodus Chapter 12:1-3')).toEqual(['Exodus', 'Chapter 12:1-3']);
-        expect(extractBookAndRange(' Exodus  Ch. 12. 1 to 3')).toEqual(['Exodus', 'Ch. 12. 1 to 3']);
-        expect(extractBookAndRange('Exodus  Chap 12. 1 to 3')).toEqual(['Exodus', 'Chap 12. 1 to 3']);
-        expect(extractBookAndRange('second Kings Chape 1 to 3')).toEqual(['second Kings Chape', '1 to 3']);
+        expect(extractBookAndRange(' Exodus  Ch. 12. 1 to 3')).toEqual([
+            'Exodus',
+            'Ch. 12. 1 to 3',
+        ]);
+        expect(extractBookAndRange('Exodus  Chap 12. 1 to 3')).toEqual([
+            'Exodus',
+            'Chap 12. 1 to 3',
+        ]);
+        expect(extractBookAndRange('second Kings Chape 1 to 3')).toEqual([
+            'second Kings Chape',
+            '1 to 3',
+        ]);
     });
 });
 

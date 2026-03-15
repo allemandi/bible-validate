@@ -5,16 +5,16 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    groups:
-      production-deps:
-        dependency-type: "production"
-        patterns:
-          - "*"
-      dev-deps:
-        dependency-type: "development"
-        patterns:
-          - "*"
+    - package-ecosystem: 'npm'
+      directory: '/'
+      schedule:
+          interval: 'monthly'
+      groups:
+          production-deps:
+              dependency-type: 'production'
+              patterns:
+                  - '*'
+          dev-deps:
+              dependency-type: 'development'
+              patterns:
+                  - '*'

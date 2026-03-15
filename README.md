@@ -4,18 +4,18 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/allemandi/bible-validate/blob/main/LICENSE)
 
 > **Fast, type-safe utilities for parsing, validating, and normalizing Bible references.**
-> 
+>
 > Works in Node.js, browsers – supports ESM, CommonJS, UMD, and TypeScript.
-> 
 
 <!-- omit from toc -->
+
 ## 🔖 Table of Contents
+
 - [✨ Features](#-features)
 - [🛠️ Installation](#️-installation)
 - [🚀 Quick Usage Examples](#-quick-usage-examples)
 - [🧪 Tests](#-tests)
 - [🤝 Contributing](#-contributing)
-
 
 ## ✨ Features
 
@@ -26,6 +26,7 @@
 - Parse and format Bible references with optional structured output
 
 ## 🛠️ Installation
+
 ```bash
 # Yarn
 yarn add @allemandi/bible-validate
@@ -38,16 +39,12 @@ npm install @allemandi/bible-validate
 
 > 📘 For a complete list of methods and options, see [the API docs](https://github.com/allemandi/bible-validate/blob/main/docs/API.md).
 
-
 **ESM**
+
 ```js
-import {
-    parseAndValidateReference,
-    isValidBook,
-    getChapterCount,
-} from '@allemandi/bible-validate';
+import { parseAndValidateReference, isValidBook, getChapterCount } from '@allemandi/bible-validate';
 const ref = 'GeN Chapter 3:  16 to 18';
-const result = parseAndValidateReference(ref, {structured: true})
+const result = parseAndValidateReference(ref, { structured: true });
 console.log(result);
 //  {
 //     isValid: true,
@@ -64,15 +61,17 @@ console.log(result);
 console.log(isValidBook('Second Chronicles')); // true
 
 // Get verse count for specific chapter in a book
-console.log(getVerseCount('Rev', 3)) // 22
+console.log(getVerseCount('Rev', 3)); // 22
 ```
 
 **CommonJS**
+
 ```js
 const { parseAndValidateReference } = require('@allemandi/bible-validate');
 ```
 
 **UMD (Browser)**
+
 ```bash
 <script src="https://unpkg.com/@allemandi/bible-validate"></script>
 <script>
@@ -93,6 +92,7 @@ npm test
 ```
 
 ## 🤝 Contributing
+
 If you have ideas, improvements, or new features:
 
 1. Fork the project

@@ -6,6 +6,14 @@ import { normalizeBookName } from './normalizer';
 
 // Build a Map at load time for fast lookup by normalized book name or alias
 const bookCache = new Map();
+for (const b of bibleCounts) {
+    const normalizedBook = normalizeBookName(b.book);
+    if (normalizedBook) bookCache.set(normalizedBook, b);
+    for (const alias of b.aliases) {
+        const normalizedAlias = normalizeBookName(alias);
+        if (normalizedAlias) bookCache.set(normalizedAlias, b);
+    }
+}
 
 /**
  * Retrieves a book object from the Bible collection matching the given book name or its aliases, ignoring case and special characters.
@@ -22,22 +30,8 @@ const bookCache = new Map();
  */
 function getBook(book) {
     if (!book) return null;
-
     const normalized = normalizeBookName(book);
-    if (bookCache.has(normalized)) {
-        return bookCache.get(normalized);
-    }
-
-    const found = bibleCounts.find(b => {
-        const normalizedBook = normalizeBookName(b.book);
-        if (normalizedBook === normalized) return true;
-
-        const normalizedAliases = b.aliases.map(normalizeBookName);
-        return normalizedAliases.includes(normalized);
-    }) || null;
-
-    bookCache.set(normalized, found);
-    return found;
+    return bookCache.get(normalized) || null;
 }
 
 /**
@@ -91,7 +85,7 @@ function getVerseCount(name, chapter) {
  * console.log(books[books.length - 1]); // "Revelation"
  */
 function listBibleBooks() {
-    return bibleCounts.map(b => b.book);
+    return bibleCounts.map((b) => b.book);
 }
 
 /**
@@ -117,9 +111,7 @@ function listAliases(bookName, { normalized = false } = {}) {
     const book = getBook(bookName);
     if (!book) return null;
     if (normalized) {
-        return [book.book, ...book.aliases]
-            .map(normalizeBookName)
-            .filter(s => s != null);
+        return [book.book, ...book.aliases].map(normalizeBookName).filter((s) => s != null);
     }
     return [book.book, ...book.aliases];
 }
@@ -140,7 +132,6 @@ function listChapters(bookName) {
     if (count == null) return null;
     return Array.from({ length: count }, (_, i) => i + 1);
 }
-
 
 /**
  * Lists all verse numbers for a given book and chapter as a sequential array starting from 1.
@@ -171,5 +162,5 @@ export {
     listBibleBooks,
     listAliases,
     listChapters,
-    listVerses
+    listVerses,
 };

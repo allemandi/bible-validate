@@ -5,7 +5,7 @@ import {
     listBibleBooks,
     listAliases,
     listChapters,
-    listVerses
+    listVerses,
 } from '../src/utils/lookup';
 
 describe('Bible Utils', () => {
@@ -72,7 +72,7 @@ describe('Bible Utils', () => {
         it('returns all aliases including official name for a valid book', () => {
             const aliases = listAliases('Second Corinthians');
             expect(aliases).not.toBeNull();
-            expect(aliases[0]).toBe("2 Corinthians");
+            expect(aliases[0]).toBe('2 Corinthians');
             expect(aliases).toContain('2 Co');
         });
         it('is case-insensitive for book names and aliases', () => {
@@ -95,7 +95,7 @@ describe('Bible Utils', () => {
             expect(aliases[0]).toBe('songofsolomon');
             expect(aliases).toContain('canticleofcanticles');
             expect(aliases).toContain('sos');
-            expect(aliases.every(a => a === a.toLowerCase())).toBe(true);
+            expect(aliases.every((a) => a === a.toLowerCase())).toBe(true);
         });
 
         describe('listChapters()', () => {
@@ -131,5 +131,4 @@ describe('Bible Utils', () => {
             });
         });
     });
-
 });

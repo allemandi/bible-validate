@@ -90,16 +90,13 @@ function parseAndValidateReference(reference, { structured = false } = {}) {
     };
     return structured
         ? {
-            ...base,
-            book: bookObj.book,
-            chapter,
-            verseStart,
-            verseEnd,
-        }
+              ...base,
+              book: bookObj.book,
+              chapter,
+              verseStart,
+              verseEnd,
+          }
         : base;
 }
 
-export {
-    parseAndValidateReference,
-    formatReference,
-}
+export { parseAndValidateReference, formatReference };

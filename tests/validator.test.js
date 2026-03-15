@@ -1,8 +1,4 @@
-import {
-    isValidBook,
-    isValidChapter,
-    isValidReference
-} from '../src/utils/validator.js';
+import { isValidBook, isValidChapter, isValidReference } from '../src/utils/validator.js';
 
 describe('Bible Reference Validator', () => {
     describe('isValidBook()', () => {

@@ -1,7 +1,5 @@
-
-
 /**
- * Normalizes a Bible book name or alias by trimming spaces, removing common prefixes, 
+ * Normalizes a Bible book name or alias by trimming spaces, removing common prefixes,
  * converting ordinal prefixes to digits, and stripping non-alphanumeric characters.
  * @public
  * @param {string} name - The raw book name or alias to normalize, possibly with prefixes, punctuation, and mixed case.
@@ -20,10 +18,15 @@ function normalizeBookName(name) {
     if (!name) return null;
     /** @type {Record<string, string>} */
     const prefixMap = {
-        '1st': '1', 'first': '1',
-        '2nd': '2', 'second': '2',
-        '3rd': '3', 'third': '3',
-        'iii': '3', 'ii': '2', 'i': '1',
+        '1st': '1',
+        first: '1',
+        '2nd': '2',
+        second: '2',
+        '3rd': '3',
+        third: '3',
+        iii: '3',
+        ii: '2',
+        i: '1',
     };
     let cleaned = name.trim().toLowerCase().replace(/\s+/g, ' ');
     cleaned = cleaned.replace(
@@ -66,7 +69,8 @@ function normalizeBookName(name) {
 function parseChapterVerse(str) {
     if (!str) return null;
 
-    const cleaned = str.toLowerCase()
+    const cleaned = str
+        .toLowerCase()
         .replace(/[–—]/g, '-')
         .replace(/\bto\b/g, '-')
         .replace(/[a-z.,]/g, '')
@@ -74,7 +78,7 @@ function parseChapterVerse(str) {
         .trim();
 
     const tokens = cleaned.split(/[\s\-:]+/).filter(Boolean);
-    const nums = tokens.map(t => parseInt(t, 10)).filter(n => !isNaN(n));
+    const nums = tokens.map((t) => parseInt(t, 10)).filter((n) => !isNaN(n));
     if (nums.length === 0) return null;
     switch (nums.length) {
         case 1:
@@ -131,19 +135,19 @@ function extractBookAndRange(ref) {
  * @returns {ParsedReference|null} - An object with normalized book name, chapter, verseStart, and verseEnd fields, or null if the input is not a string.
  * @example
  * // Parses ordinal prefix and returns structured reference
- * parseBibleReference('2nd Kings 4:2'); 
+ * parseBibleReference('2nd Kings 4:2');
  * // { book: '2kings', chapter: 4, verseStart: 2, verseEnd: null }
  * // Handles mixed casing, chapter/verse labels, and verse range
- * parseBibleReference(' Iii JohN  Chap. 1 verses 9 to  11'); 
+ * parseBibleReference(' Iii JohN  Chap. 1 verses 9 to  11');
  * // { book: '3john', chapter: 1, verseStart: 9, verseEnd: 11 }
  * // Returns null fields when chapter and verse are omitted
- * parseBibleReference('Genesis'); 
+ * parseBibleReference('Genesis');
  * // { book: 'genesis', chapter: null, verseStart: null, verseEnd: null }
  * // Cleans and parses input with excessive spacing
- * parseBibleReference('  1st   Samuel    17 : 4-9 '); 
+ * parseBibleReference('  1st   Samuel    17 : 4-9 ');
  * // { book: '1samuel', chapter: 17, verseStart: 4, verseEnd: 9 }
  * // Returns null for invalid or non-string input
- * parseBibleReference('!!!'); 
+ * parseBibleReference('!!!');
  * // { book: null, chapter: null, verseStart: null, verseEnd: null }
  * parseBibleReference(42); // null
  */
@@ -159,7 +163,7 @@ function parseBibleReference(ref) {
             verseStart: null,
             verseEnd: null,
         };
-    };
+    }
     const chapVerse = chapterVerseRaw ? parseChapterVerse(chapterVerseRaw) : null;
     return {
         book,
@@ -169,9 +173,4 @@ function parseBibleReference(ref) {
     };
 }
 
-export {
-    normalizeBookName,
-    parseChapterVerse,
-    extractBookAndRange,
-    parseBibleReference,
-};
+export { normalizeBookName, parseChapterVerse, extractBookAndRange, parseBibleReference };

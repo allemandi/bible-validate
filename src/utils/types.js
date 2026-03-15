@@ -36,6 +36,6 @@
  * @property {string|null} error
  * @property {string} original
  * @property {string} [formatted]
-*/
+ */
 
 export {};
