@@ -18,11 +18,15 @@ describe('formatReference()', () => {
     });
 
     it('returns book, chapter and verse range', () => {
-        expect(formatReference({ book: 'Genesis', chapter: 1, verseStart: 1, verseEnd: 5 })).toBe('Genesis 1:1-5');
+        expect(formatReference({ book: 'Genesis', chapter: 1, verseStart: 1, verseEnd: 5 })).toBe(
+            'Genesis 1:1-5'
+        );
     });
 
     it('returns single verse if verseStart equals verseEnd', () => {
-        expect(formatReference({ book: 'Genesis', chapter: 1, verseStart: 3, verseEnd: 3 })).toBe('Genesis 1:3');
+        expect(formatReference({ book: 'Genesis', chapter: 1, verseStart: 3, verseEnd: 3 })).toBe(
+            'Genesis 1:3'
+        );
     });
 });
 

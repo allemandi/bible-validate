@@ -1,7 +1,5 @@
 {
-    "include": [
-        "src/**/*"
-    ],
+    "include": ["src/**/*"],
     "compilerOptions": {
         "allowJs": true,
         "checkJs": true,
@@ -9,7 +7,7 @@
         "declarationMap": true,
         "emitDeclarationOnly": true,
         "module": "ESNext",
-        "target": "ESNext", 
+        "target": "ESNext",
         "moduleResolution": "Node",
         "outDir": "dist",
         "strict": true,

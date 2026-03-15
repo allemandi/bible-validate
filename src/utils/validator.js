@@ -85,8 +85,4 @@ function isValidReference(book, chapter, verseStart, verseEnd = null) {
     return true;
 }
 
-export {
-    isValidBook,
-    isValidChapter,
-    isValidReference
-};
+export { isValidBook, isValidChapter, isValidReference };
