@@ -8,8 +8,10 @@ export default defineConfig([
     js.configs.recommended,
     { files: ['**/*.js'], languageOptions: { sourceType: 'module' } },
     {
-        files: ["**/*.{js,mjs,cjs}"],
-        languageOptions: { globals: { ...globals.browser, ...globals.jest } },
+        files: ['**/*.{js,mjs,cjs}'],
+        languageOptions: {
+            globals: { ...globals.browser, ...globals.jest, ...globals.node },
+        },
     },
     eslintConfigPrettier,
 ]);
