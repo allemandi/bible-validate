@@ -1,6 +1,6 @@
 {
     "name": "@allemandi/bible-validate",
-    "version": "2.2.10",
+    "version": "2.2.11",
     "description": "Fast, type-safe utilities for parsing, validating, and normalizing Bible references.",
     "sideEffects": false,
     "engines": {
