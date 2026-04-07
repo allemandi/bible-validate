@@ -2,7 +2,7 @@
  * @import { BibleBook } from './types.js'
  */
 import bibleCounts from '../data/bibleCounts.json';
-import { normalizeBookName } from './normalizer';
+import { normalizeBookName } from './normalizer.js';
 
 // Build a Map at load time for fast lookup by normalized book name or alias
 const bookCache = new Map();

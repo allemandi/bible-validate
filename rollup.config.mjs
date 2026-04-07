@@ -1,8 +1,6 @@
 import { createRequire } from 'node:module';
 
-import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import resolve from '@rollup/plugin-node-resolve';
 import dts from 'rollup-plugin-dts';
 
 const require = createRequire(import.meta.url);
@@ -23,11 +21,7 @@ function makeExternal(names) {
     };
 }
 
-const plugins = [
-    resolve({ extensions: ['.mjs', '.js', '.json'], browser: true }),
-    commonjs(),
-    json(),
-];
+const plugins = [json()];
 
 export default [
     // ESM + CJS
