@@ -61,6 +61,7 @@
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@rollup/plugin-json": "^6.1.0",
+        "@typescript/native": "npm:typescript@^7.0.2",
         "documentation": "^14.0.3",
         "eslint": "10.7.0",
         "eslint-config-prettier": "^10.1.8",
@@ -69,6 +70,6 @@
         "prettier": "^3.8.1",
         "rollup": "4.62.2",
         "rollup-plugin-dts": "6.4.1",
-        "typescript": "6.0.3"
+        "typescript": "npm:@typescript/typescript6@^6.0.2"
     }
 }
