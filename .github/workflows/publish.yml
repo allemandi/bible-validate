@@ -1,34 +1,37 @@
 name: Publish to NPM
 
 on:
-    push:
-        tags:
-            - 'v*.*.*'
+  push:
+    tags:
+      - 'v*.*.*'
 
 permissions:
-    id-token: write # Required for OIDC auth
+  id-token: write      # Required for OIDC auth
 
 jobs:
-    publish:
-        runs-on: ubuntu-latest
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-        steps:
-            - uses: actions/checkout@v7
-            - uses: actions/setup-node@v7
-              with:
-                  node-version: 22
-                  registry-url: 'https://registry.npmjs.org/'
-                  cache: 'yarn'
+    steps:
+      - uses: actions/checkout@v7
 
-            # Install dependencies using Yarn
-            - name: Install dependencies
-              run: yarn install --frozen-lockfile
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'yarn'
 
-            # Build package
-            - name: Build package
-              run: yarn build
+      # Install dependencies using Yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-            # npm publish using OIDC (Yarn publish cannot use OIDC)
-            - name: Publish to npm
-              run: |
-                  npx npm@latest publish --provenance --access public
+      # Build package
+      - name: Build package
+        run: yarn build
+
+      # npm publish using OIDC (Yarn publish cannot use OIDC)
+      - name: Publish to npm
+        run: |
+          npx npm@latest publish --provenance --access public
