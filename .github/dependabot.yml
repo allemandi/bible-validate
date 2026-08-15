@@ -21,5 +21,12 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      actions-updates:
+      actions-patch-updates:
         patterns: ["*"]
+        update-types: ["patch"]
+      actions-minor-updates:
+        patterns: ["*"]
+        update-types: ["minor"]
+      actions-major-updates:
+        patterns: ["*"]
+        update-types: ["major"]
